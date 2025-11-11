@@ -84,4 +84,4 @@ const bandSchema = mongoose.Schema({
     }
 })
 
-export default mongoose.model('Band', userSchema)
+export default mongoose.model('Band', bandSchema)
