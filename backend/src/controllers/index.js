@@ -1,4 +1,5 @@
-import { createBand } from "./Band/createBand";
+import { createBand } from './Band/createBand.js'
+
 export const BandController = {
-    createBand
+    createBand,
 }

@@ -1,7 +1,7 @@
-import Band from "../../models/Band"
+import Band from '../../models/Band.js'
 
 // Função para criar uma nova banda
-export const createBand = async (req, res) => {
+export async function createBand(req, res) {
   try {
     const {
       name,

@@ -1,7 +1,8 @@
 import { Router } from 'express'
-import { BandController } from './controllers'
+import { BandController } from './controllers/index.js'
+
 const routes = Router()
+
 routes.post('/bands', BandController.createBand)
-//rotas
 
 export default routes
