@@ -5,5 +5,6 @@ const routes = Router()
 
 routes.post('/bands', BandController.createBand)
 routes.get('/bands', BandController.getBands)
+routes.delete('/bands/:id', BandController.deleteBand)
 
 export default routes
