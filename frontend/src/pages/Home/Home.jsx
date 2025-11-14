@@ -1,10 +1,11 @@
 import './home.css'
+import Header from '../../components/Header/Header.jsx'
 
-export function Home() {
+export default function Home() {
 
     return (
 
-        <div></div>
+        <Header />
         
     )
 }

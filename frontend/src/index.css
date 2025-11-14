@@ -1,0 +1,12 @@
+:root {
+    --dark-grey: #131316;
+    --light-grey: #717384;
+    --ghost-white: #FBFBFF;
+    --maroon: #840D0B;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--dark-grey);
+    color: var(--ghost-white);
+}

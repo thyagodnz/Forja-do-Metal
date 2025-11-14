@@ -1,10 +1,17 @@
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
+import Home from './pages/Home/Home.jsx'
 
 function App() {
 
-  return (
-    <h1>Forja do Metal</h1>
-  )
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />
+    }
+  ])
+
+  return <RouterProvider router={router} />
 }
 
 export default App
