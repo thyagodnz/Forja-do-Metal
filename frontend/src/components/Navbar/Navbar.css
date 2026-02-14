@@ -1,0 +1,20 @@
+nav {
+    display: flex;
+    justify-content: flex-end; /* Alinha à direita */
+    align-items: center;
+    gap: 15px;
+    padding: 10px 30px; /* Espaçamento lateral */
+    margin-left: auto;
+}
+
+nav a {
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+nav a:hover {
+    cursor: pointer;
+    color: var(--maroon);
+}
