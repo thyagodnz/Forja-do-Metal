@@ -1,4 +1,5 @@
 import Band from '../../models/Band.js'
+import bcrypt from 'bcrypt'
 
 // Função para criar uma nova banda
 export async function createBand(req, res) {
@@ -27,11 +28,13 @@ export async function createBand(req, res) {
       return res.status(400).json({ message: 'Este e-mail já está cadastrado.' })
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10)
+
     // Cria uma nova instância de Band com os dados recebidos
     const newBand = new Band({
       name,
       email,
-      password,
+      password: hashedPassword,
       date,
       address,
       members,

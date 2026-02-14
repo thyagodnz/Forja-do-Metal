@@ -8,7 +8,6 @@
     padding: 40px 20px;
 }
 
-/* Título */
 .container h1 {
     color: #ff1a1a;
     font-size: 32px;
@@ -17,7 +16,6 @@
     text-transform: uppercase;
 }
 
-/* Formulário */
 form {
     width: 100%;
     max-width: 600px;
@@ -26,18 +24,8 @@ form {
     gap: 15px;
 }
 
-/* Labels */
-label {
-    display: flex;
-    flex-direction: column;
-    color: #ffffff;
-    font-size: 14px;
-    text-transform: uppercase;
-    gap: 5px;
-}
-
-/* Inputs */
-input {
+input,
+select {
     background-color: #1c1c1c;
     border: 1px solid #ff1a1a;
     padding: 12px;
@@ -45,24 +33,17 @@ input {
     outline: none;
     font-size: 14px;
     transition: 0.3s ease;
+    flex: 1;
 }
 
-/* Efeito ao focar */
-input:focus {
+input:focus,
+select:focus {
     border: 1px solid #ff4d4d;
     box-shadow: 0 0 8px #ff1a1a;
 }
 
-/* Input file customizado */
-input[type="file"] {
-    padding: 8px;
-    background-color: #111;
-    cursor: pointer;
-}
-
-/* Botão registrar */
 button {
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 12px;
     background: transparent;
     border: 1px solid #ff1a1a;
@@ -78,7 +59,26 @@ button:hover {
     color: #000;
 }
 
-/* Responsividade */
+.member-group,
+.social-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.remove-btn {
+    background: #660000;
+    border: 1px solid #ff1a1a;
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+.remove-btn:hover {
+    background: #ff1a1a;
+    color: #000;
+}
+
 @media (max-width: 600px) {
     .container h1 {
         font-size: 24px;
@@ -87,4 +87,26 @@ button:hover {
     form {
         max-width: 100%;
     }
+
+    .member-group,
+    .social-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.cadastrar-button {
+    background-color: var(--maroon);
+    border: none;
+    color: #fff;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    width: 50%;
+    align-self: center;
+    border-radius: 20px;
+    margin-top: 30px;
 }
