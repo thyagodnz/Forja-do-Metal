@@ -1,12 +1,22 @@
-import './Navbar.css'
-import { NavLink } from 'react-router-dom'
+import "./Navbar.css"
+import { NavLink } from "react-router-dom"
+import logo from "../../assets/logo.png"
 
 const Navbar = () => {
     return (
         <nav>
-            <NavLink to='/'>BANDAS</NavLink>
-            <NavLink to='/'>SHOWS</NavLink>
-            <NavLink to='/register'>CADASTRO</NavLink>
+            <div className="logo">
+                <NavLink to="/">
+                    <img src={logo} alt="Forja do Metal" />
+                </NavLink>
+            </div>
+
+            <div className="nav-links">
+                <NavLink to="/bandas">Bandas</NavLink>
+                <NavLink to="/shows">Shows</NavLink>
+                <NavLink to="/login">Entrar</NavLink>
+                <NavLink to="/cadastrar">Cadastrar</NavLink>
+            </div>
         </nav>
     )
 }

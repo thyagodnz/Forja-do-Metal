@@ -1,7 +1,6 @@
-import Band from '../../models/Band.js'
-import bcrypt from 'bcrypt'
+import Band from "../../models/Band.js"
+import bcrypt from "bcrypt"
 
-// Função para criar uma nova banda
 export async function createBand(req, res) {
   try {
     const {
@@ -14,23 +13,33 @@ export async function createBand(req, res) {
       description,
       musicalGenre,
       image,
-      socialLinks
+      socialLinks,
     } = req.body
 
-    // Verifica se todos os campos obrigatórios foram enviados
-    if (!name || !email || !password || !date || !address || !description || !musicalGenre || !image) {
-      return res.status(400).json({ message: 'Preencha todos os campos obrigatórios.' })
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !date ||
+      !address ||
+      !description ||
+      !musicalGenre ||
+      !image
+    ) {
+      return res
+        .status(400)
+        .json({ message: "Preencha todos os campos obrigatórios" })
     }
 
-    // Verifica se já existe uma banda com o mesmo email
     const existingBand = await Band.findOne({ email })
     if (existingBand) {
-      return res.status(400).json({ message: 'Este e-mail já está cadastrado.' })
+      return res
+        .status(400)
+        .json({ message: "Este e-mail já está cadastrado" })
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    // Cria uma nova instância de Band com os dados recebidos
     const newBand = new Band({
       name,
       email,
@@ -41,19 +50,17 @@ export async function createBand(req, res) {
       description,
       musicalGenre,
       image,
-      socialLinks
+      socialLinks,
     })
 
-    // Salva no banco
     await newBand.save()
 
     res.status(201).json({
-      message: 'Banda criada com sucesso!',
-      band: newBand
+      message: "Banda cadastrada com sucesso",
+      band: newBand,
     })
-
   } catch (error) {
-    console.error('Erro ao criar banda:', error)
-    res.status(500).json({ message: 'Erro interno do servidor.', error })
+    console.error("Erro ao cadastrar banda:", error)
+    res.status(500).json({ message: "Erro interno do servidor", error })
   }
 }

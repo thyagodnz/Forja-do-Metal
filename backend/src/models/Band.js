@@ -39,7 +39,6 @@ const socialLinksSchema = mongoose.Schema({
     }
 })
 
-
 const bandSchema = mongoose.Schema({
     name: {
         type: String,

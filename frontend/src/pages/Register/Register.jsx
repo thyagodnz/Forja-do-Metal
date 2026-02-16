@@ -165,7 +165,7 @@ export default function Register() {
                     required
                 />
 
-                <h3>Endereço</h3>
+                <h3>Localização</h3>
 
                 <input
                     type="text"
@@ -232,12 +232,14 @@ export default function Register() {
                     + Adicionar Membro
                 </button>
 
-                <input
-                    type="text"
+                <h3>Informações Adicionais</h3>
+
+                <textarea
                     name="description"
-                    placeholder="Descrição"
+                    placeholder="Descrição da Banda"
                     value={formData.description}
                     onChange={handleChange}
+                    rows={6}
                     required
                 />
 
