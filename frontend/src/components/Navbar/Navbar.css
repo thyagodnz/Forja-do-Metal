@@ -1,9 +1,9 @@
 nav {
     display: flex;
-    background-color: #26262c;
-    padding: 13px 100px;
+    background-color: var(--onyx);
+    padding: 13px 150px;
     position: relative;
-    border-bottom: 1px solid #53535f;
+    border-bottom: 2px solid #2e2e2e;
 }
 
 .logo {
@@ -32,9 +32,9 @@ nav a {
 
 nav a:hover {
     cursor: pointer;
-    color: var(--maroon);
+    color: var(--oxblood);
 }
 
 .active {
-    color: var(--maroon);
+    color: var(--oxblood);
 }
