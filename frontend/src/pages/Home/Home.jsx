@@ -1,11 +1,8 @@
-import './home.css'
-import Header from '../../components/Header/Header.jsx'
+import './Home.css'
 
 export default function Home() {
 
     return (
-
-        <Header />
-        
+        <h1>Home</h1>
     )
 }

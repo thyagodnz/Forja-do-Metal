@@ -1,9 +1,9 @@
 import Band from '../../models/Band.js'
+
 export async function updateBand(req, res) {
     try {
         const { id } = req.params
 
-        // Atualiza tudo que vier no body
         const updated = await Band.findByIdAndUpdate(
             id,
             { $set: req.body },

@@ -1,17 +1,22 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar/Navbar.jsx'
 import Home from './pages/Home/Home.jsx'
+import Register from './pages/Register/Register.jsx'
 
 function App() {
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Home />
-    }
-  ])
-
-  return <RouterProvider router={router} />
+  return (
+    <>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/cadastrar' element={<Register />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  )
 }
 
 export default App

@@ -1,0 +1,40 @@
+nav {
+    display: flex;
+    background-color: var(--onyx);
+    padding: 13px 150px;
+    position: relative;
+    border-bottom: 2px solid #28282c;
+}
+
+.logo {
+    display: flex;
+    cursor: pointer;
+}
+
+.logo img {
+    max-height: 80px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-left: auto;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--ghost-white);
+    font-weight: bold;
+    transition: 0.2s ease;
+    text-transform: uppercase;
+}
+
+nav a:hover {
+    cursor: pointer;
+    color: var(--oxblood);
+}
+
+.active {
+    color: var(--oxblood);
+}

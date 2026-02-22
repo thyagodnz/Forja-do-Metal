@@ -1,10 +1,5 @@
-
 import Band from '../../models/Band.js'
 
-/**
- * GET /bands
- * Retorna todas as bandas
- */
 export async function getBands(req, res) {
   try {
     const bands = await Band.find()
