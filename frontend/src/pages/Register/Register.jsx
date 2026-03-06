@@ -203,7 +203,7 @@ export default function Register() {
                             )}
                         </div>
                     ))}
-                    <button type="button" onClick={addMember}>
+                    <button type="button"  className="add-member-button" onClick={addMember}>
                         + Adicionar Membro
                     </button>
 

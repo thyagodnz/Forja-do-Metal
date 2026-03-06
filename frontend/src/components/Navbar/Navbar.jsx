@@ -2,7 +2,7 @@ import "./Navbar.css"
 import { NavLink } from "react-router-dom"
 import logo from "../../assets/logo.png"
 
-const Navbar = () => {
+const Navbar = ({ onLoginClick }) => {
     return (
         <nav>
             <div className="logo">
@@ -14,7 +14,11 @@ const Navbar = () => {
             <div className="nav-links">
                 <NavLink to="/bandas">Bandas</NavLink>
                 <NavLink to="/shows">Shows</NavLink>
-                <NavLink to="/login">Entrar</NavLink>
+
+                <button className="login-btn" onClick={onLoginClick}>
+                    Entrar
+                </button>
+
                 <NavLink to="/cadastrar">Cadastrar</NavLink>
             </div>
         </nav>

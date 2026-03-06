@@ -63,7 +63,7 @@ textarea:focus {
     box-shadow: 0 0 8px #ff1a1a;
 }
 
-button {
+.add-member-button {
     margin-top: 10px;
     padding: 12px;
     background: transparent;
@@ -76,7 +76,7 @@ button {
     border-radius: 5px;
 }
 
-button:hover {
+.add-member-button:hover {
     background-color: #ff1a1a;
     color: #000;
 }
@@ -89,14 +89,20 @@ button:hover {
 }
 
 .remove-btn {
+    font-size: 12px;
+    padding: 8px 12px;
     background: #660000;
     border: 1px solid #ff1a1a;
-    padding: 8px 12px;
-    font-size: 12px;
+    color: var(--ghost-white);
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    border-radius: 5px;
 }
 
 .remove-btn:hover {
-    background: #ff1a1a;
+    background-color: #ff1a1a;
     color: #000;
 }
 
@@ -114,6 +120,11 @@ button:hover {
     align-self: center;
     border-radius: 20px;
     margin-top: 30px;
+}
+
+.cadastrar-button:hover {
+    background-color: #ff1a1a;
+    color: #000;
 }
 
 @media (max-width: 600px) {

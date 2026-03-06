@@ -22,19 +22,29 @@ nav {
     margin-left: auto;
 }
 
-nav a {
+nav a,
+.login-btn {
     text-decoration: none;
     color: var(--ghost-white);
     font-weight: bold;
-    transition: 0.2s ease;
     text-transform: uppercase;
+    transition: 0.2s ease;
 }
 
-nav a:hover {
-    cursor: pointer;
+nav a:hover,
+.login-btn:hover {
     color: var(--oxblood);
 }
 
 .active {
     color: var(--oxblood);
+}
+
+.login-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    font-weight: bold;
 }
