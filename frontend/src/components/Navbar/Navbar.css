@@ -22,8 +22,7 @@ nav {
     margin-left: auto;
 }
 
-nav a,
-.login-btn {
+nav a {
     text-decoration: none;
     color: var(--ghost-white);
     font-weight: bold;
@@ -31,20 +30,10 @@ nav a,
     transition: 0.2s ease;
 }
 
-nav a:hover,
-.login-btn:hover {
+nav a:hover {
     color: var(--oxblood);
 }
 
 .active {
     color: var(--oxblood);
-}
-
-.login-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    font-weight: bold;
 }

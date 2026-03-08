@@ -1,8 +1,12 @@
 import "./Navbar.css"
 import { NavLink } from "react-router-dom"
+import { useAuth } from "../../contexts/AuthContext"
 import logo from "../../assets/logo.png"
 
-const Navbar = ({ onLoginClick }) => {
+const Navbar = () => {
+
+    const { user } = useAuth()
+
     return (
         <nav>
             <div className="logo">
@@ -15,11 +19,16 @@ const Navbar = ({ onLoginClick }) => {
                 <NavLink to="/bandas">Bandas</NavLink>
                 <NavLink to="/shows">Shows</NavLink>
 
-                <button className="login-btn" onClick={onLoginClick}>
-                    Entrar
-                </button>
-
-                <NavLink to="/cadastrar">Cadastrar</NavLink>
+                {!user ? (
+                    <>
+                        <NavLink to="/login">Entrar</NavLink>
+                        <NavLink to="/cadastro">Cadastrar</NavLink>
+                    </>
+                ) : (
+                    <NavLink to={`/perfil/${user.id}`}>
+                        {user.name}
+                    </NavLink>
+                )}
             </div>
         </nav>
     )

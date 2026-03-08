@@ -1,26 +1,38 @@
 import Band from "../../models/Band.js";
 import bcrypt from "bcrypt";
+import { generateToken } from "../../utils/generateToken.js";
 
 export async function createBand(req, res) {
   try {
-    const { name, email, password, address, members, year, musicalGenre } = req.body;
+    const { name, email, password, address, members, year, musicalGenre } =
+      req.body;
 
-    if (!name || !email || !password || !address || !members || !year || !musicalGenre) {
-      return res.status(400).json({ message: "Preencha todos os campos" });
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !address ||
+      !members ||
+      !year ||
+      !musicalGenre
+    ) {
+      return res.status(400).json({
+        message: "Preencha todos os campos",
+      });
     }
 
-    const existingBand = await Band.findOne({ email });
+    const existingBand = await Band.findOne({ email })
 
     if (existingBand) {
-      return res
-        .status(400)
-        .json({ message: "Este e-mail já está cadastrado" });
+      return res.status(400).json({
+        message: "Este e-mail já está cadastrado",
+      });
     }
 
     if (password.length < 8) {
-      return res
-        .status(400)
-        .json({ message: "A senha deve ter pelo menos 8 caracteres" });
+      return res.status(400).json({
+        message: "A senha deve ter pelo menos 8 caracteres",
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -37,12 +49,24 @@ export async function createBand(req, res) {
 
     await newBand.save();
 
-    res.status(201).json({
+    const token = generateToken(newBand);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.status(201).json({
       message: "Banda cadastrada com sucesso",
-      band: newBand,
+      band: newBand.toJSON(),
     });
   } catch (error) {
     console.error("Erro ao cadastrar banda:", error);
-    res.status(500).json({ message: "Erro interno do servidor", error });
+
+    return res.status(500).json({
+      message: "Erro interno do servidor",
+    });
   }
 }

@@ -1,27 +1,50 @@
-import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { useState } from 'react'
-import Navbar from './components/Navbar/Navbar.jsx'
-import Home from './pages/Home/Home.jsx'
-import Register from './pages/Register/Register.jsx'
-import LoginModal from './components/LoginModal/LoginModal.jsx'
+import "./App.css"
+
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { useAuth } from "./contexts/AuthContext"
+
+import PublicRoute from "./routes/PublicRoute.jsx"
+
+import Navbar from "./components/Navbar/Navbar.jsx"
+import Home from "./pages/Home/Home.jsx"
+import Register from "./pages/Register/Register.jsx"
+import Login from "./pages/Login/Login.jsx"
+import Profile from "./pages/Profile/Profile.jsx"
 
 function App() {
+  const { loading } = useAuth();
 
-  const [isLoginOpen, setIsLoginOpen] = useState(false)
+  if (loading) {
+    return null
+  }
 
   return (
     <BrowserRouter>
-      <Navbar onLoginClick={() => setIsLoginOpen(true)} />
+      <Navbar />
 
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/cadastrar' element={<Register />} />
-      </Routes>
+        <Route path="/" element={<Home />} />
 
-      {isLoginOpen && (
-        <LoginModal onClose={() => setIsLoginOpen(false)} />
-      )}
+        <Route
+          path="/cadastro"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+
+        <Route path="/perfil/:id" element={<Profile />} />
+      </Routes>
     </BrowserRouter>
   )
 }
