@@ -1,0 +1,49 @@
+.home-container {
+  padding: 50px 150px;
+}
+
+.home-title {
+  margin-bottom: 30px;
+  margin-top: 0px;
+}
+
+.bands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.band-card {
+  background: #1c1c1c;
+  border-radius: 10px;
+  padding: 15px;
+  text-decoration: none;
+  color: white;
+  transition: transform 0.2s;
+}
+
+.band-card:hover {
+  transform: translateY(-5px);
+}
+
+.band-image {
+  height: 140px;
+  margin-bottom: 10px;
+}
+
+.band-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.band-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 40px;
+  background: #2a2a2a;
+  border-radius: 6px;
+}
