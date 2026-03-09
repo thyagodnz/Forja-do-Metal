@@ -1,0 +1,32 @@
+.login-button {
+    background-color: var(--oxblood);
+    border: none;
+    color: var(--ghost-white);
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    width: 50%;
+    align-self: center;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.login-button:hover {
+    background-color: #ff1a1a;
+    color: #000;
+}
+
+.error-form {
+    color: #ff4d4d;
+    font-size: 14px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .login-button {
+        width: 100%;
+    }
+}
