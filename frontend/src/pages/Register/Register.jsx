@@ -81,27 +81,29 @@ export default function Register() {
         e.preventDefault();
 
         setError("");
+        setLoading(true);
 
         if (formData.password.length < 8) {
             setError("A senha deve ter pelo menos 8 caracteres");
+            setLoading(false);
             return;
         }
 
         if (formData.password !== formData.confirmPassword) {
             setError("As senhas não coincidem");
+            setLoading(false);
             return;
         }
 
         const { confirmPassword, ...dataToSend } = formData;
 
         try {
-            setLoading(true);
 
             const response = await api.post("/bands", dataToSend);
 
             setUser(response.data.band);
 
-            navigate("/");
+            navigate(`/perfil/${response.data.band.id}`)
         } catch (error) {
 
             if (error.response) {

@@ -23,7 +23,7 @@ export async function loginBand(req, res) {
       return res.status(400).json({ message: "Email ou senha inválidos" })
     }
 
-    const token = generateToken(band)
+    const token = generateToken(band.id)
 
     res.cookie("token", token, {
       httpOnly: true,

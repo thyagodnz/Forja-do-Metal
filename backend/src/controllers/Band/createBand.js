@@ -49,7 +49,7 @@ export async function createBand(req, res) {
 
     await newBand.save();
 
-    const token = generateToken(newBand);
+    const token = generateToken(newBand.id);
 
     res.cookie("token", token, {
       httpOnly: true,

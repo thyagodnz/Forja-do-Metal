@@ -1,12 +1,12 @@
-import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
-export function generateToken(user) {
+export function generateToken(id) {
     return jwt.sign(
-        { id: user._id },
+        { id },
         process.env.JWT_SECRET,
-        { expiresIn: '7d' }
-    )
+        { expiresIn: "7d" }
+    );
 }

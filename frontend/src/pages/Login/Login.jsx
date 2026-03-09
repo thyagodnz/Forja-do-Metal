@@ -34,13 +34,11 @@ export default function Login() {
 
         try {
 
-            await api.post("/auth/login", formData)
+            const response = await api.post("/auth/login", formData)
 
-            const response = await api.get("/auth/me")
+            setUser(response.data.band)
 
-            setUser(response.data)
-
-            navigate("/")
+            navigate(`/perfil/${response.data.band.id}`)
 
         } catch (error) {
 
