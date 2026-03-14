@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useAuth } from "../../contexts/AuthContext"
 import api from "../../services/api"
+import Loading from "../../components/Loading/Loading"
 
 export default function Profile() {
 
@@ -32,7 +33,7 @@ export default function Profile() {
     }
 
     if (!band) {
-        return <p>Carregando...</p>
+        return <Loading />
     }
 
     const isOwner = user && user.id === band.id

@@ -2,6 +2,7 @@ import "./Home.css"
 import { useEffect, useState } from "react"
 import api from "../../services/api"
 import { Link } from "react-router-dom"
+import Loading from "../../components/Loading/Loading"
 
 export default function Home() {
 
@@ -13,7 +14,6 @@ export default function Home() {
             try {
 
                 const response = await api.get("/bands/recent")
-
                 setBands(response.data)
 
             } catch (error) {
@@ -27,20 +27,43 @@ export default function Home() {
     }, [])
 
     if (loading) {
-        return <p className="home-loading">Carregando bandas...</p>
+        return <Loading />
     }
 
     return (
         <div className="home-container">
 
+            {/* HERO */}
+            <section className="hero">
+
+                <div className="hero-content">
+
+                    <h1>Forja do Metal</h1>
+
+                    <p>
+                        Descubra bandas, conecte-se com músicos
+                        e fortaleça a cena underground
+                    </p>
+
+                    <Link to="/bandas" className="hero-button">
+                        Explorar bandas →
+                    </Link>
+
+                </div>
+
+            </section>
+
+
+            {/* BANDAS RECENTES */}
             <section className="recent-bands-section">
 
-                <h1 className="home-title">
+                <h2 className="home-title">
                     Recém-chegadas na Forja
-                </h1>
-                <h2 className="home-subtitle">
-                    Confira as bandas que acabaram de entrar para a nossa comunidade
                 </h2>
+
+                <h3 className="home-subtitle">
+                    Confira as bandas que acabaram de entrar para a nossa comunidade
+                </h3>
 
                 <div className="bands-grid">
 
@@ -52,11 +75,17 @@ export default function Home() {
                         >
 
                             <div className="band-image">
+
                                 {band.image ? (
-                                    <img src={band.image} alt={band.name} />
+                                    <img
+                                        src={band.image}
+                                        alt={`Imagem da banda ${band.name}`}
+                                        loading="lazy"
+                                    />
                                 ) : (
                                     <div className="band-placeholder">🎸</div>
                                 )}
+
                             </div>
 
                             <div className="band-info">
@@ -71,9 +100,14 @@ export default function Home() {
 
                 {bands.length === 6 && (
                     <div className="see-more-container">
-                        <Link to="/bandas" className="see-more-button">
+
+                        <Link
+                            to="/bandas"
+                            className="see-more-button"
+                        >
                             Veja mais
                         </Link>
+
                     </div>
                 )}
 

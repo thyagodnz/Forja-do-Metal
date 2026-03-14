@@ -63,7 +63,7 @@ textarea:focus {
 .add-member-button {
     margin-top: 10px;
     padding: 12px;
-    background: #660000;
+    background-color: #660000;
     border: 1px solid #660000;
     color: var(--ghost-white);
     font-weight: bold;
@@ -83,7 +83,7 @@ textarea:focus {
 .remove-btn {
     font-size: 12px;
     padding: 8px 12px;
-    background: #660000;
+    background-color: #660000;
     border: 1px solid #660000;
     color: var(--ghost-white);
     font-weight: bold;
@@ -95,8 +95,7 @@ textarea:focus {
 
 .add-member-button:hover,
 .remove-btn:hover {
-    background-color: #ff1a1a;
-    color: #000;
+    background-color: #870101;
 }
 
 .cadastrar-button {
@@ -116,8 +115,7 @@ textarea:focus {
 }
 
 .cadastrar-button:hover {
-    background-color: #ff1a1a;
-    color: #000;
+    background-color: #b02a28;
 }
 
 @media (max-width: 600px) {
