@@ -1,49 +1,109 @@
 .home-container {
-  padding: 50px 150px;
+  width: 100%;
+}
+
+.recent-bands-section {
+  max-width: 650px;
+  margin: 60px 150px;
 }
 
 .home-title {
-  margin-bottom: 30px;
+  color: var(--ghost-white);
+  font-size: 30px;
   margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.home-subtitle {
+  font-size: 18px;
+  margin-top: 0px;
+  margin-bottom: 30px;
+  color: #aaa;
+  font-weight: 400;
 }
 
 .bands-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
 }
 
 .band-card {
-  background: #1c1c1c;
-  border-radius: 10px;
-  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-decoration: none;
-  color: white;
+  color: var(--ghost-white);
   transition: transform 0.2s;
+  background-color: var(--onyx);
+  padding: 30px;
+  border-radius: 8px;
 }
 
 .band-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
+  transition: 0.3s ease-out;
+  background-color: #991412a9;
 }
 
 .band-image {
-  height: 140px;
-  margin-bottom: 10px;
+  width: 110px;
+  height: 110px;
+  margin-bottom: 8px;
 }
 
 .band-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 50%;
 }
 
 .band-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  font-size: 40px;
+  width: 110px;
+  height: 110px;
+  font-size: 34px;
   background: #2a2a2a;
-  border-radius: 6px;
+  border-radius: 50%;
+}
+
+.band-info {
+  text-align: center;
+}
+
+.band-info h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.band-info p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.see-more-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 13px;
+}
+
+.see-more-button {
+  text-decoration: none;
+  color: #e63946;
+  font-weight: 500;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.see-more-button::after {
+  content: " →";
+}
+
+.see-more-button:hover {
+  color: #ff4d5a;
+  text-decoration: underline;
 }

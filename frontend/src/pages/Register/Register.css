@@ -8,10 +8,9 @@
     width: 100%;
     max-width: 700px;
     padding: 40px;
-    border: 2px solid #ff1a1a4c;
-    border-radius: 10px;
+    border-radius: 20px;
     background-color: var(--onyx);
-    box-shadow: 0 0 10px rgba(255, 26, 26, 0.15);
+    box-shadow: 0 0 3px #222226;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,7 +38,7 @@ input,
 select,
 textarea {
     background-color: #1c1c1c;
-    border: 1px solid #ff1a1a;
+    border: 1px solid #1c1c1c;
     padding: 12px;
     color: var(--ghost-white);
     outline: none;
@@ -59,25 +58,19 @@ input:focus,
 select:focus,
 textarea:focus {
     border: 1px solid #ff4d4d;
-    box-shadow: 0 0 8px #ff1a1a;
 }
 
 .add-member-button {
     margin-top: 10px;
     padding: 12px;
-    background: transparent;
-    border: 1px solid #ff1a1a;
+    background: #660000;
+    border: 1px solid #660000;
     color: var(--ghost-white);
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
     transition: 0.3s ease;
     border-radius: 5px;
-}
-
-.add-member-button:hover {
-    background-color: #ff1a1a;
-    color: #000;
 }
 
 .member-group {
@@ -91,7 +84,7 @@ textarea:focus {
     font-size: 12px;
     padding: 8px 12px;
     background: #660000;
-    border: 1px solid #ff1a1a;
+    border: 1px solid #660000;
     color: var(--ghost-white);
     font-weight: bold;
     cursor: pointer;
@@ -100,6 +93,7 @@ textarea:focus {
     border-radius: 5px;
 }
 
+.add-member-button:hover,
 .remove-btn:hover {
     background-color: #ff1a1a;
     color: #000;
@@ -132,7 +126,7 @@ textarea:focus {
     }
 
     .form-card h1 {
-        font-size: 24px;
+        font-size: 26px;
     }
 
     .member-group {

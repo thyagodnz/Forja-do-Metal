@@ -122,7 +122,7 @@ export default function Register() {
     return (
         <div className="container">
             <div className="form-card">
-                <h1>Cadastro da Banda</h1>
+                <h1>Cadastre sua Banda</h1>
 
                 <form onSubmit={handleSubmit}>
 
