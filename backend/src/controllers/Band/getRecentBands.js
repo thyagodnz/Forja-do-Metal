@@ -5,7 +5,7 @@ export async function getRecentBands(req, res) {
 
     const bands = await Band
       .find()
-      .select("name image musicalGenre")
+      .select("name profilePicture musicalGenre")
       .sort({ createdAt: -1 })
       .limit(6);
 

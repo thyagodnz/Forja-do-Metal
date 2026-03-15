@@ -76,9 +76,9 @@ export default function Home() {
 
                             <div className="band-image">
 
-                                {band.image ? (
+                                {band.profilePicture ? (
                                     <img
-                                        src={band.image}
+                                        src={band.profilePicture}
                                         alt={`Imagem da banda ${band.name}`}
                                         loading="lazy"
                                     />
