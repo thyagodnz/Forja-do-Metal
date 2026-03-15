@@ -5,7 +5,9 @@ import { auth } from './middlewares/auth.js'
 const routes = Router()
 
 routes.post('/bands', BandController.createBand)
+
 routes.get('/bands', BandController.getBands)
+routes.get('/bands/recent', BandController.getRecentBands)
 routes.get('/bands/:id', BandController.getBandById)
 
 routes.delete('/bands/:id', BandController.deleteBand)

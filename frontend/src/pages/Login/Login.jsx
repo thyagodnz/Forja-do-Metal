@@ -59,7 +59,7 @@ export default function Login() {
         <div className="container">
             <div className="form-card">
 
-                <h1>Entrar na Forja do Metal</h1>
+                <h1>Entre na Forja do Metal</h1>
 
                 <form onSubmit={handleSubmit}>
 

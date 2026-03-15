@@ -7,9 +7,11 @@ import PublicRoute from "./routes/PublicRoute.jsx"
 
 import Navbar from "./components/Navbar/Navbar.jsx"
 import Home from "./pages/Home/Home.jsx"
-import Register from "./pages/Register/Register.jsx"
+import Bands from "./pages/Bands/Bands.jsx"
+import Shows from "./pages/Shows/Shows.jsx"
 import Login from "./pages/Login/Login.jsx"
-import Profile from "./pages/Profile/Profile.jsx"
+import Register from "./pages/Register/Register.jsx"
+import BandProfile from "./pages/Profile/BandProfile.jsx"
 
 function App() {
   const { loading } = useAuth();
@@ -24,15 +26,8 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-
-        <Route
-          path="/cadastro"
-          element={
-            <PublicRoute>
-              <Register />
-            </PublicRoute>
-          }
-        />
+        <Route path="/bandas" element={<Bands />} />
+        <Route path="/shows" element={<Shows />} />
 
         <Route
           path="/login"
@@ -43,7 +38,17 @@ function App() {
           }
         />
 
-        <Route path="/perfil/:id" element={<Profile />} />
+        <Route
+          path="/cadastro"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+
+        <Route path="/perfil/:id" element={<BandProfile />} />
+
       </Routes>
     </BrowserRouter>
   )

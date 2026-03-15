@@ -5,6 +5,7 @@ import { updateBand } from './Band/updateBand.js'
 import { loginBand} from './Band/loginBand.js'
 import { logoutBand } from './Band/logoutBand.js'
 import { getBandById } from './Band/getBandById.js'
+import { getRecentBands } from './Band/getRecentBands.js'
 
 export const BandController = {
     createBand,
@@ -14,4 +15,5 @@ export const BandController = {
     loginBand,
     logoutBand,
     getBandById,
+    getRecentBands,
 }

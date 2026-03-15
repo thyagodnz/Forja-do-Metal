@@ -1,0 +1,179 @@
+.home-container {
+  width: 100%;
+  margin: auto;
+}
+
+/* HERO */
+
+.hero {
+  height: 420px;
+  display: flex;
+  align-items: center;
+  padding-left: 150px;
+  background: radial-gradient(circle at top, #1a1a1a, #0f0f0f);
+}
+
+.hero-content {
+  max-width: 500px;
+}
+
+.hero h1 {
+  font-size: 52px;
+  margin: 0;
+  color: var(--ghost-white);
+}
+
+.hero p {
+  margin: 16px 0 28px;
+  font-size: 18px;
+  color: #bdbdbd;
+}
+
+.hero-button {
+  text-decoration: none;
+  color: var(--ghost-white);
+  background: #e63946;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: 0.25s;
+}
+
+.hero-button:hover {
+  background: rgb(191, 62, 73);
+}
+
+/* SECTION: RECENT BANDS */
+
+.recent-bands-section {
+  max-width: 600px;
+  margin: 70px 150px;
+}
+
+.home-title {
+  color: var(--ghost-white);
+  font-size: 30px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.home-subtitle {
+  font-size: 18px;
+  margin-top: 0px;
+  margin-bottom: 30px;
+  color: #aaa;
+  font-weight: 400;
+}
+
+/* BANDS GRID */
+
+.bands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+/* BANDS CARD */
+
+.band-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--ghost-white);
+  background-color: var(--onyx);
+  padding: 30px;
+  border-radius: 8px;
+  
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+
+  animation: fadeUp 0.4s ease forwards;
+}
+
+.band-card:hover {
+  transform: translateY(-5px) scale(1.02);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.5);
+
+  background-color: #991412a9;
+}
+
+/* BAND IMAGE */
+
+.band-image {
+  width: 110px;
+  height: 110px;
+  margin-bottom: 10px;
+}
+
+.band-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #2a2a2a;
+  transition: border 0.25s ease;
+}
+
+.band-card:hover .band-image img {
+  border-color: #e6394736;
+}
+
+/* PLACEHOLDER */
+
+.band-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 110px;
+  font-size: 34px;
+  background: #2a2a2a;
+  border-radius: 50%;
+}
+
+/* TEXT */
+
+.band-info {
+  text-align: center;
+}
+
+.band-info h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.band-info p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* SEE MORE */
+
+.see-more-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.see-more-button {
+  text-decoration: none;
+  color: #e63946;
+  font-weight: 500;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.see-more-button::after {
+  content: " →";
+}
+
+.see-more-button:hover {
+  color: #ff4d5a;
+  text-decoration: underline;
+}
