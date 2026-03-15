@@ -11,7 +11,7 @@ import Bands from "./pages/Bands/Bands.jsx"
 import Shows from "./pages/Shows/Shows.jsx"
 import Login from "./pages/Login/Login.jsx"
 import Register from "./pages/Register/Register.jsx"
-import Profile from "./pages/Profile/Profile.jsx"
+import BandProfile from "./pages/Profile/BandProfile.jsx"
 
 function App() {
   const { loading } = useAuth();
@@ -47,7 +47,7 @@ function App() {
           }
         />
 
-        <Route path="/perfil/:id" element={<Profile />} />
+        <Route path="/perfil/:id" element={<BandProfile />} />
 
       </Routes>
     </BrowserRouter>
