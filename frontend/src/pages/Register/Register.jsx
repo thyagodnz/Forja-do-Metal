@@ -199,7 +199,7 @@ export default function Register() {
                         required
                     />
 
-                    <h3>Membros</h3>
+                    <h3>Membros e Instrumentos</h3>
 
                     {formData.members.map((member, index) => (
                         <div key={index} className="member-group">
@@ -207,7 +207,7 @@ export default function Register() {
                             <input
                                 type="text"
                                 name="name"
-                                placeholder="Nome do membro"
+                                placeholder="Nome"
                                 value={member.name}
                                 onChange={(e) => handleMemberChange(index, e)}
                                 disabled={loading}

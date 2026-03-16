@@ -109,7 +109,12 @@ const bandSchema = new mongoose.Schema(
       default: "",
     },
 
-    image: {
+    profilePicture: {
+      type: String,
+      default: "",
+    },
+
+    coverPicture: {
       type: String,
       default: "",
     },

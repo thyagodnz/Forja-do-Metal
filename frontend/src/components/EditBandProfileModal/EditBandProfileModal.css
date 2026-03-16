@@ -1,0 +1,313 @@
+/* OVERLAY */
+.edit-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 2000;
+}
+
+/* MODAL */
+.edit-modal {
+    width: 100%;
+    max-width: 600px;
+    max-height: calc(100vh - 80px);
+    background: var(--onyx);
+    border-radius: 12px;
+    border: 1px solid #2a2a2a;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ::-webkit-scrollbar {
+  //cor da barra de rolagem
+} */
+
+/* HEADER */
+.modal-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--ghost-white);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* FORM */
+.edit-form {
+    padding: 18px 20px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-sizing: border-box;
+}
+
+/* COVER AREA (capa + foto sobreposta) */
+.cover-area {
+    position: relative;
+    width: 100%;
+    min-height: 160px;
+    margin-bottom: 40px;
+}
+
+/* COVER PREVIEW - clique pra alterar */
+.cover-label {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+}
+
+.cover-preview {
+    width: 100%;
+    height: 180px;
+    border-radius: 5px;
+    background: radial-gradient(circle at top, #1a1a1a, #0f0f0f);
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #2b2b2b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* overlay do ícone e texto - aparece no hover */
+.cover-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #ddd;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transition: opacity 0.18s ease;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.cover-preview:hover .cover-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* PROFILE PREVIEW - sobreposta na parte inferior da capa */
+.profile-label {
+    position: absolute;
+    left: 13px;
+    bottom: -60px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.profile-preview {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--onyx);
+    background: #1c1c1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 14px;
+}
+
+.profile-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    font-size: 40px;
+    color: #aaa;
+
+    background: #2a2a2a;
+    border-radius: 50%;
+}
+
+/* overlay ícone no avatar */
+.profile-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ddd;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.14s ease;
+    font-weight: 10px;
+}
+
+.profile-preview:hover .profile-overlay {
+    opacity: 1;
+}
+
+/* label texto ao lado (aparece sob a foto) */
+/* .profile-label p {
+    margin: 0;
+    color: var(--ghost-white);
+    font-size: 13px;
+    margin-left: 10px;
+} */
+
+/* inputs */
+.edit-form input[type="text"],
+.edit-form input[type="number"],
+.edit-form textarea,
+.edit-form select {
+    background: #1c1c1c;
+    border: 1px solid #2a2a2a;
+    padding: 10px 12px;
+    color: var(--ghost-white);
+    border-radius: 5px;
+    font: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.edit-form input:focus,
+.edit-form select:focus,
+.edit-form textarea:focus {
+    border: 1px solid #ff4d4d;
+}
+
+/* textarea */
+.edit-form textarea {
+    min-height: 120px;
+    resize: none;
+}
+
+.edit-form h4 {
+    margin-bottom: 0;
+    color: var(--ghost-white);
+    font-weight: 700;
+}
+
+/* rows de inputs: flex com gap, inputs ocupam igualmente.
+   .location-row tem 3 inputs — também compartilham o espaço sem overflow. */
+.row {
+    display: flex;
+    gap: 10px;
+}
+
+.row input {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* localização - mesma regra, evita diferença de espaço extra */
+.location-row input {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* membros */
+.member-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.member-row input {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* ações */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.cancel-btn {
+    background: transparent;
+    border: 1px solid #333;
+    padding: 10px 16px;
+    border-radius: 20px;
+    color: #ddd;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.cancel-btn:hover {
+    background: #1f1f23;
+}
+
+.save-btn {
+    background: var(--ghost-white);
+    border: 1px solid var(--ghost-white);
+    padding: 10px 18px;
+    border-radius: 20px;
+    color: var(--onyx);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.save-btn:hover {
+    opacity: 0.8;
+}
+
+.save-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* erros */
+.error-form {
+    color: #ff8b8b;
+    margin: 0;
+}
+
+/* responsivo */
+@media (max-width: 720px) {
+    .profile-label {
+        left: 10px;
+        bottom: -35px;
+    }
+
+    .profile-preview {
+        width: 90px;
+        height: 90px;
+    }
+
+    .cover-preview {
+        height: 140px;
+    }
+
+    .cover-area {
+        margin-bottom: 20px;
+    }
+}
