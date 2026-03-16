@@ -11,7 +11,7 @@ import Bands from "./pages/Bands/Bands.jsx"
 import Shows from "./pages/Shows/Shows.jsx"
 import Login from "./pages/Login/Login.jsx"
 import Register from "./pages/Register/Register.jsx"
-import BandProfile from "./pages/Profile/BandProfile.jsx"
+import BandProfile from "./pages/BandProfile/BandProfile.jsx"
 
 function App() {
   const { loading } = useAuth();

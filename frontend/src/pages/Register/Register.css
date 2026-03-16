@@ -63,14 +63,18 @@ textarea:focus {
 .add-member-button {
     margin-top: 10px;
     padding: 12px;
-    background-color: #660000;
-    border: 1px solid #660000;
+    background-color: transparent;
+    border: 1px solid #333;
     color: var(--ghost-white);
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
     transition: 0.3s ease;
     border-radius: 5px;
+}
+
+.add-member-button:hover {
+    background-color: #660000;
 }
 
 .member-group {
@@ -93,7 +97,6 @@ textarea:focus {
     border-radius: 5px;
 }
 
-.add-member-button:hover,
 .remove-btn:hover {
     background-color: #870101;
 }

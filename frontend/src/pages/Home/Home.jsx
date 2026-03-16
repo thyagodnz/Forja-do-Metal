@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import api from "../../services/api"
 import { Link } from "react-router-dom"
 import Loading from "../../components/Loading/Loading"
+import { FiUser } from "react-icons/fi"
 
 export default function Home() {
 
@@ -83,7 +84,9 @@ export default function Home() {
                                         loading="lazy"
                                     />
                                 ) : (
-                                    <div className="band-placeholder">🎸</div>
+                                    <div className="band-placeholder">
+                                        <FiUser />
+                                    </div>
                                 )}
 
                             </div>

@@ -4,11 +4,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../services/api";
 import Loading from "../../components/Loading/Loading";
+import EditBandProfileModal from "../../components/EditBandProfileModal/EditBandProfileModal";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-import { FiMusic, FiMapPin, FiCalendar } from "react-icons/fi";
+import { FiMusic, FiMapPin, FiCalendar, FiUser, FiEdit, FiLogOut } from "react-icons/fi";
 
 export default function BandProfile() {
     const { id } = useParams();
@@ -18,14 +19,19 @@ export default function BandProfile() {
 
     const [band, setBand] = useState(null);
     const [activeTab, setActiveTab] = useState("about");
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [loadingBand, setLoadingBand] = useState(true);
 
     useEffect(() => {
         async function loadBand() {
             try {
+                setLoadingBand(true);
                 const response = await api.get(`/bands/${id}`);
                 setBand(response.data);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setLoadingBand(false);
             }
         }
 
@@ -37,8 +43,18 @@ export default function BandProfile() {
         navigate("/");
     }
 
-    if (!band) {
+    // callback para atualizar o estado local após edição bem-sucedida
+    function handleUpdatedBand(updated) {
+        setBand(updated);
+        setIsEditOpen(false);
+    }
+
+    if (loadingBand) {
         return <Loading />;
+    }
+
+    if (!band) {
+        return <p className="empty-tab">Banda não encontrada</p>;
     }
 
     const isOwner = user && user.id === band.id;
@@ -62,17 +78,18 @@ export default function BandProfile() {
                     {band.profilePicture ? (
                         <img src={band.profilePicture} alt={band.name} />
                     ) : (
-                        <div className="profile-placeholder">🎸</div>
+                        <div className="profile-placeholder">
+                            <FiUser />
+                        </div>
                     )}
                 </div>
 
-                {/* INFO + BOTÃO */}
+                {/* INFO + BOTÕES */}
                 <div className="profile-top-row">
                     <div className="profile-info">
                         <h1>{band.name}</h1>
 
                         <div className="profile-meta">
-
                             <p className="meta-item">
                                 <FiMusic className="meta-icon" />
                                 {band.musicalGenre} • {band.year}
@@ -90,20 +107,29 @@ export default function BandProfile() {
                                     locale: ptBR,
                                 })}
                             </p>
-
                         </div>
                     </div>
 
                     {isOwner && (
-                        <button className="logout-button" onClick={handleLogout}>
-                            Sair
-                        </button>
+                        <div className="action-buttons">
+                            <button
+                                className="edit-button"
+                                onClick={() => setIsEditOpen(true)}
+                            >
+                                <FiEdit />
+                                Editar perfil
+                            </button>
+
+                            <button className="logout-button" onClick={handleLogout}>
+                                <FiLogOut />
+                                Sair
+                            </button>
+                        </div>
                     )}
                 </div>
             </div>
 
             {/* TABS */}
-
             <div className="profile-tabs">
                 <button
                     className={activeTab === "about" ? "active" : ""}
@@ -134,13 +160,16 @@ export default function BandProfile() {
                 </button>
             </div>
 
-            {/* CONTENT */}
-
+            {/* CONTEÚDO */}
             <div className="profile-content">
                 {activeTab === "about" && (
                     <div className="about-tab">
                         {band.description ? (
-                            <p className="band-description">{band.description}</p>
+                            <div className="band-description">
+                                {band.description.split("\n").map((line, index) => (
+                                    <p key={index}>{line}</p>
+                                ))}
+                            </div>
                         ) : (
                             <p className="empty-tab">Sem descrição</p>
                         )}
@@ -166,6 +195,14 @@ export default function BandProfile() {
                     <div className="empty-tab">Nenhum álbum cadastrado</div>
                 )}
             </div>
+
+            {isOwner && isEditOpen && (
+                <EditBandProfileModal
+                    band={band}
+                    onClose={() => setIsEditOpen(false)}
+                    onUpdated={handleUpdatedBand}
+                />
+            )}
         </div>
     );
 }
