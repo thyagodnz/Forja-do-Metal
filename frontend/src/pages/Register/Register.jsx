@@ -1,10 +1,15 @@
 import "./Register.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 import api from "../../services/api.js";
 
 export default function Register() {
     const navigate = useNavigate();
+    const { setUser } = useAuth();
+
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -23,6 +28,7 @@ export default function Register() {
 
     function handleChange(e) {
         const { name, value } = e.target;
+
         setFormData((prev) => ({
             ...prev,
             [name]: value,
@@ -31,6 +37,7 @@ export default function Register() {
 
     function handleAddressChange(e) {
         const { name, value } = e.target;
+
         setFormData((prev) => ({
             ...prev,
             address: {
@@ -42,6 +49,7 @@ export default function Register() {
 
     function handleMemberChange(index, e) {
         const { name, value } = e.target;
+
         const updatedMembers = [...formData.members];
         updatedMembers[index][name] = value;
 
@@ -72,46 +80,59 @@ export default function Register() {
     async function handleSubmit(e) {
         e.preventDefault();
 
+        setError("");
+        setLoading(true);
+
         if (formData.password.length < 8) {
-            alert("A senha deve ter pelo menos 8 caracteres");
+            setError("A senha deve ter pelo menos 8 caracteres");
+            setLoading(false);
             return;
         }
 
         if (formData.password !== formData.confirmPassword) {
-            alert("As senhas não coincidem");
+            setError("As senhas não coincidem");
+            setLoading(false);
             return;
         }
 
         const { confirmPassword, ...dataToSend } = formData;
 
         try {
-            await api.post("/bands", dataToSend);
 
-            alert("Banda cadastrada com sucesso");
+            const response = await api.post("/bands", dataToSend);
 
-            navigate("/");
+            setUser(response.data.band);
+
+            navigate(`/perfil/${response.data.band.id}`)
         } catch (error) {
+
             if (error.response) {
-                alert(error.response.data.message);
+                setError(error.response.data.message);
             } else {
-                alert("Erro ao conectar com o servidor");
+                setError("Erro ao conectar com o servidor");
             }
+
             console.error(error);
+
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <div className="container">
             <div className="form-card">
-                <h1>Cadastro da Banda</h1>
+                <h1>Cadastre sua Banda</h1>
 
                 <form onSubmit={handleSubmit}>
+
                     <input
                         type="text"
                         name="name"
                         placeholder="Nome da Banda"
                         value={formData.name}
                         onChange={handleChange}
+                        disabled={loading}
                         required
                     />
 
@@ -121,6 +142,7 @@ export default function Register() {
                         placeholder="E-mail"
                         value={formData.email}
                         onChange={handleChange}
+                        disabled={loading}
                         required
                     />
 
@@ -131,6 +153,7 @@ export default function Register() {
                         value={formData.password}
                         onChange={handleChange}
                         minLength={8}
+                        disabled={loading}
                         required
                     />
 
@@ -140,6 +163,7 @@ export default function Register() {
                         placeholder="Confirmar senha"
                         value={formData.confirmPassword}
                         onChange={handleChange}
+                        disabled={loading}
                         required
                     />
 
@@ -151,6 +175,7 @@ export default function Register() {
                         placeholder="Região"
                         value={formData.address.region}
                         onChange={handleAddressChange}
+                        disabled={loading}
                         required
                     />
 
@@ -160,6 +185,7 @@ export default function Register() {
                         placeholder="Estado"
                         value={formData.address.state}
                         onChange={handleAddressChange}
+                        disabled={loading}
                         required
                     />
 
@@ -169,41 +195,55 @@ export default function Register() {
                         placeholder="Cidade"
                         value={formData.address.city}
                         onChange={handleAddressChange}
+                        disabled={loading}
                         required
                     />
 
-                    <h3>Membros</h3>
+                    <h3>Membros e Instrumentos</h3>
 
                     {formData.members.map((member, index) => (
                         <div key={index} className="member-group">
+
                             <input
                                 type="text"
                                 name="name"
-                                placeholder="Nome do membro"
+                                placeholder="Nome"
                                 value={member.name}
                                 onChange={(e) => handleMemberChange(index, e)}
+                                disabled={loading}
                                 required
                             />
+
                             <input
                                 type="text"
                                 name="instrument"
                                 placeholder="Instrumento"
                                 value={member.instrument}
                                 onChange={(e) => handleMemberChange(index, e)}
+                                disabled={loading}
                                 required
                             />
+
                             {formData.members.length > 1 && (
                                 <button
                                     type="button"
                                     className="remove-btn"
                                     onClick={() => removeMember(index)}
+                                    disabled={loading}
                                 >
                                     Remover
                                 </button>
                             )}
+
                         </div>
                     ))}
-                    <button type="button" onClick={addMember}>
+
+                    <button
+                        type="button"
+                        className="add-member-button"
+                        onClick={addMember}
+                        disabled={loading}
+                    >
                         + Adicionar Membro
                     </button>
 
@@ -217,6 +257,7 @@ export default function Register() {
                         onChange={handleChange}
                         min="1900"
                         max={new Date().getFullYear()}
+                        disabled={loading}
                         required
                     />
 
@@ -226,12 +267,24 @@ export default function Register() {
                         placeholder="Estilo musical"
                         value={formData.musicalGenre}
                         onChange={handleChange}
+                        disabled={loading}
                         required
                     />
 
-                    <button type="submit" className="cadastrar-button">
-                        Cadastrar
+                    {error && (
+                        <p className="error-form">
+                            {error}
+                        </p>
+                    )}
+
+                    <button
+                        type="submit"
+                        className="cadastrar-button"
+                        disabled={loading}
+                    >
+                        {loading ? "Cadastrando..." : "Cadastrar"}
                     </button>
+
                 </form>
             </div>
         </div>

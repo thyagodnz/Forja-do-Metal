@@ -1,5 +1,4 @@
 .container {
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9,14 +8,13 @@
     width: 100%;
     max-width: 700px;
     padding: 40px;
-    border: 2px solid #ff1a1a4c;
-    border-radius: 10px;
+    border-radius: 20px;
     background-color: var(--onyx);
-    box-shadow: 0 0 10px rgba(255, 26, 26, 0.15);
+    box-shadow: 0 0 3px #222226;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 40px 20px;
+    margin: 50px 20px;
 }
 
 .form-card h1 {
@@ -40,7 +38,7 @@ input,
 select,
 textarea {
     background-color: #1c1c1c;
-    border: 1px solid #ff1a1a;
+    border: 1px solid #1c1c1c;
     padding: 12px;
     color: var(--ghost-white);
     outline: none;
@@ -60,14 +58,13 @@ input:focus,
 select:focus,
 textarea:focus {
     border: 1px solid #ff4d4d;
-    box-shadow: 0 0 8px #ff1a1a;
 }
 
-button {
+.add-member-button {
     margin-top: 10px;
     padding: 12px;
-    background: transparent;
-    border: 1px solid #ff1a1a;
+    background-color: transparent;
+    border: 1px solid #333;
     color: var(--ghost-white);
     font-weight: bold;
     cursor: pointer;
@@ -76,9 +73,8 @@ button {
     border-radius: 5px;
 }
 
-button:hover {
-    background-color: #ff1a1a;
-    color: #000;
+.add-member-button:hover {
+    background-color: #660000;
 }
 
 .member-group {
@@ -89,15 +85,20 @@ button:hover {
 }
 
 .remove-btn {
-    background: #660000;
-    border: 1px solid #ff1a1a;
-    padding: 8px 12px;
     font-size: 12px;
+    padding: 8px 12px;
+    background-color: #660000;
+    border: 1px solid #660000;
+    color: var(--ghost-white);
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    border-radius: 5px;
 }
 
 .remove-btn:hover {
-    background: #ff1a1a;
-    color: #000;
+    background-color: #870101;
 }
 
 .cadastrar-button {
@@ -116,13 +117,17 @@ button:hover {
     margin-top: 30px;
 }
 
+.cadastrar-button:hover {
+    background-color: #b02a28;
+}
+
 @media (max-width: 600px) {
     .form-card {
         padding: 25px;
     }
 
     .form-card h1 {
-        font-size: 24px;
+        font-size: 26px;
     }
 
     .member-group {
