@@ -6,14 +6,19 @@ const AuthContext = createContext()
 export function AuthProvider({ children }) {
 
     const [user, setUser] = useState(null)
+    const [type, setType] = useState(null)
     const [loading, setLoading] = useState(true)
 
     async function checkAuth() {
         try {
             const response = await api.get("/auth/me")
-            setUser(response.data)
+
+            setUser(response.data.user)
+            setType(response.data.type)
+
         } catch {
             setUser(null)
+            setType(null)
         } finally {
             setLoading(false)
         }
@@ -27,6 +32,7 @@ export function AuthProvider({ children }) {
         }
 
         setUser(null)
+        setType(null)
     }
 
     useEffect(() => {
@@ -37,9 +43,12 @@ export function AuthProvider({ children }) {
         <AuthContext.Provider
             value={{
                 user,
+                type,
                 setUser,
+                setType,
                 logout,
-                loading
+                loading,
+                isAuthenticated: !!user
             }}
         >
             {children}

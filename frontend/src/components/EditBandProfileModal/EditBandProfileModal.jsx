@@ -1,7 +1,7 @@
 import "./EditBandProfileModal.css";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
-import { FiCamera, FiUser } from "react-icons/fi";
+import { FiCamera, FiMusic } from "react-icons/fi";
 
 export default function EditProfileModal({ band, onClose, onUpdated }) {
     const [form, setForm] = useState({
@@ -156,7 +156,7 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
         <div className="edit-modal-overlay" onMouseDown={handleOverlayClick}>
             <div className="edit-modal" onMouseDown={(e) => e.stopPropagation()}>
                 <div className="modal-header">
-                    <h2>Editar perfil</h2>
+                    <h2>Editar perfil da banda</h2>
                 </div>
 
                 <form onSubmit={handleSubmit} className="edit-form">
@@ -200,7 +200,7 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                                     <img src={profilePreview} alt="preview" />
                                 ) : (
                                     <div className="modal-placeholder">
-                                        <FiUser />
+                                        <FiMusic />
                                     </div>
                                 )}
 

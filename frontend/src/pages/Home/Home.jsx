@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import api from "../../services/api"
 import { Link } from "react-router-dom"
 import Loading from "../../components/Loading/Loading"
-import { FiUser } from "react-icons/fi"
+import { FiMusic } from "react-icons/fi"
 
 export default function Home() {
 
@@ -71,7 +71,7 @@ export default function Home() {
                     {bands.map((band) => (
                         <Link
                             key={band.id}
-                            to={`/perfil/${band.id}`}
+                            to={`/perfil-banda/${band.id}`}
                             className="band-card"
                         >
 
@@ -85,7 +85,7 @@ export default function Home() {
                                     />
                                 ) : (
                                     <div className="band-placeholder">
-                                        <FiUser />
+                                        <FiMusic />
                                     </div>
                                 )}
 

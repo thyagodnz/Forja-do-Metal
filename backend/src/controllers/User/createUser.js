@@ -1,29 +1,20 @@
-import Band from "../../models/Band.js";
+import User from "../../models/User.js";
 import bcrypt from "bcrypt";
 import { generateToken } from "../../utils/generateToken.js";
 
-export async function createBand(req, res) {
+export async function createUser(req, res) {
   try {
-    const { name, email, password, address, members, year, musicalGenre } =
-      req.body;
+    const { name, email, password } = req.body;
 
-    if (
-      !name ||
-      !email ||
-      !password ||
-      !address ||
-      !members ||
-      !year ||
-      !musicalGenre
-    ) {
+    if (!name || !email || !password) {
       return res.status(400).json({
         message: "Preencha todos os campos",
       });
     }
 
-    const existingBand = await Band.findOne({ email });
+    const existingUser = await User.findOne({ email });
 
-    if (existingBand) {
+    if (existingUser) {
       return res.status(400).json({
         message: "Este e-mail já está cadastrado",
       });
@@ -37,22 +28,15 @@ export async function createBand(req, res) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newBand = new Band({
+    const newUser = new User({
       name,
       email,
       password: hashedPassword,
-      address,
-      members,
-      year,
-      musicalGenre,
     });
 
-    await newBand.save();
+    await newUser.save();
 
-    const token = generateToken({
-      id: newBand.id,
-      type: "band",
-    });
+    const token = generateToken(newUser.id);
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -62,12 +46,11 @@ export async function createBand(req, res) {
     });
 
     return res.status(201).json({
-      message: "Banda cadastrada com sucesso",
-      type: "band",
-      user: newBand.toJSON(),
+      message: "Usuário cadastrado com sucesso",
+      user: newUser.toJSON(),
     });
   } catch (error) {
-    console.error("Erro ao cadastrar banda:", error);
+    console.error("Erro ao cadastrar usuário:", error);
 
     return res.status(500).json({
       message: "Erro interno do servidor",

@@ -2,10 +2,13 @@ import "./Navbar.css"
 import { NavLink } from "react-router-dom"
 import { useAuth } from "../../contexts/AuthContext"
 import logo from "../../assets/logo.png"
+import Loading from "../Loading/Loading.jsx"
 
 const Navbar = () => {
 
-    const { user } = useAuth()
+    const { user, type, isAuthenticated, loading } = useAuth()
+
+    if (loading) return <Loading />
 
     return (
         <nav>
@@ -19,15 +22,23 @@ const Navbar = () => {
                 <NavLink to="/bandas">Bandas</NavLink>
                 <NavLink to="/shows">Shows</NavLink>
 
-                {!user ? (
+                {!isAuthenticated ? (
                     <>
                         <NavLink to="/login">Entrar</NavLink>
                         <NavLink to="/cadastro">Cadastrar</NavLink>
                     </>
                 ) : (
-                    <NavLink to={`/perfil/${user.id}`}>
-                        {user.name}
-                    </NavLink>
+                    <>
+                        <NavLink
+                            to={
+                                type === "band"
+                                    ? `/perfil-banda/${user.id}`
+                                    : `/perfil-usuario/${user.id}`
+                            }
+                        >
+                            {user.name}
+                        </NavLink>
+                    </>
                 )}
             </div>
         </nav>
