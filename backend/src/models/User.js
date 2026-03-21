@@ -33,13 +33,11 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
 
-    favoriteBands: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Band",
-        unique: true,
-      },
-    ],
+    favoriteBands: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Band",
+      default: [],
+    },
   },
   { timestamps: true },
 );

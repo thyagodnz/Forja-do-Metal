@@ -1,10 +1,10 @@
-import "./Register.css";
+import "./RegisterBand.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext.jsx";
-import api from "../../../services/api.js";
+import { useAuth } from "../../../../contexts/AuthContext.jsx";
+import api from "../../../../services/api.js";
 
-export default function Register() {
+export default function RegisterBand() {
     const navigate = useNavigate();
     const { setUser, setType } = useAuth();
 

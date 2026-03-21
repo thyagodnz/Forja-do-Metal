@@ -10,7 +10,8 @@ import Home from "./pages/Home/Home.jsx"
 import Bands from "./pages/Bands/Bands.jsx"
 import Shows from "./pages/Shows/Shows.jsx"
 import Login from "./pages/Auth/Login/Login.jsx"
-import Register from "./pages/Auth/Register/Register.jsx"
+import RegisterBand from "./pages/Auth/Register/RegisterBand/RegisterBand.jsx"
+import RegisterUser from "./pages/Auth/Register/RegisterUser/RegisterUser.jsx"
 import BandProfile from "./pages/Profile/BandProfile/BandProfile.jsx"
 import UserProfile from "./pages/Profile/UserProfile/UserProfile.jsx"
 
@@ -40,10 +41,19 @@ function App() {
         />
 
         <Route
-          path="/cadastro"
+          path="/cadastro-banda"
           element={
             <PublicRoute>
-              <Register />
+              <RegisterBand />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/cadastro-usuario"
+          element={
+            <PublicRoute>
+              <RegisterUser />
             </PublicRoute>
           }
         />

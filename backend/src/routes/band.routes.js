@@ -9,7 +9,7 @@ router.post("/", BandController.createBand)
 router.get("/", BandController.getBands)
 router.get("/recent", BandController.getRecentBands)
 router.get("/:id", BandController.getBandById)
-router.delete("/:id", auth, BandController.deleteBand)
+router.delete("/:id", BandController.deleteBand)
 
 router.put(
     "/:id",

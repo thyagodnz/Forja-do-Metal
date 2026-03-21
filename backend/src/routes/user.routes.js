@@ -15,6 +15,6 @@ router.put(
     UserController.updateUser
 )
 
-router.delete("/:id", auth, UserController.deleteUser)
+router.delete("/:id", UserController.deleteUser)
 
 export default router

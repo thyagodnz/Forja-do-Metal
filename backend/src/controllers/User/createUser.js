@@ -36,7 +36,10 @@ export async function createUser(req, res) {
 
     await newUser.save();
 
-    const token = generateToken(newUser.id);
+    const token = generateToken({
+      id: newUser.id,
+      type: "user",
+    });
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -47,6 +50,7 @@ export async function createUser(req, res) {
 
     return res.status(201).json({
       message: "Usuário cadastrado com sucesso",
+      type: "user",
       user: newUser.toJSON(),
     });
   } catch (error) {
