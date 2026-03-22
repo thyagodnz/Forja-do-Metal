@@ -1,7 +1,7 @@
 import "./EditBandProfileModal.css";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
-import { FiCamera, FiMusic } from "react-icons/fi";
+import { FiCamera, FiMusic, FiX } from "react-icons/fi";
 
 export default function EditProfileModal({ band, onClose, onUpdated }) {
     const [form, setForm] = useState({
@@ -45,6 +45,7 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
         function handleKey(e) {
             if (e.key === "Escape") onClose();
         }
+
         window.addEventListener("keydown", handleKey);
 
         return () => {
@@ -89,9 +90,11 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
     function handleProfileImage(e) {
         const file = e.target.files[0];
         if (!file) return;
+
         if (profilePreview && profilePreview.startsWith("blob:")) {
             URL.revokeObjectURL(profilePreview);
         }
+
         setProfileFile(file);
         setProfilePreview(URL.createObjectURL(file));
     }
@@ -99,9 +102,11 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
     function handleCoverImage(e) {
         const file = e.target.files[0];
         if (!file) return;
+
         if (coverPreview && coverPreview.startsWith("blob:")) {
             URL.revokeObjectURL(coverPreview);
         }
+
         setCoverFile(file);
         setCoverPreview(URL.createObjectURL(file));
     }
@@ -144,7 +149,7 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
         }
     }
 
-    function handleOverlayClick(e) {
+    function handleOverlayClick() {
         const sel = window.getSelection && window.getSelection();
         if (sel && sel.toString && sel.toString().length > 0) {
             return;
@@ -157,10 +162,19 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
             <div className="edit-modal" onMouseDown={(e) => e.stopPropagation()}>
                 <div className="modal-header">
                     <h2>Editar perfil da banda</h2>
+
+                    <button
+                        type="button"
+                        className="close-icon"
+                        onClick={onClose}
+                        disabled={submitting}
+                        aria-label="Fechar modal"
+                    >
+                        <FiX />
+                    </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="edit-form">
-                    {/* COVER + PROFILE (sobrepostos) */}
                     <div className="cover-area">
                         <label className="cover-label">
                             <input
@@ -195,7 +209,11 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                                 hidden
                                 disabled={submitting}
                             />
-                            <div className="profile-preview" title="Alterar foto do perfil">
+
+                            <div
+                                className="profile-preview"
+                                title="Alterar foto do perfil"
+                            >
                                 {profilePreview ? (
                                     <img src={profilePreview} alt="preview" />
                                 ) : (
@@ -212,7 +230,6 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                         </label>
                     </div>
 
-                    {/* FIELDS */}
                     <h4>Nome e Descrição</h4>
                     <input
                         type="text"

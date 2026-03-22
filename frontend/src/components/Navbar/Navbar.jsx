@@ -4,44 +4,85 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useState, useEffect } from "react";
 import logo from "../../assets/logo.png";
 import Loading from "../Loading/Loading.jsx";
-import { FiUser, FiMusic } from "react-icons/fi";
+import { FiUser, FiMusic, FiX } from "react-icons/fi";
 
 const Navbar = () => {
   const { user, type, isAuthenticated, loading } = useAuth();
   const [showModal, setShowModal] = useState(false);
+  const [canCloseOnOverlay, setCanCloseOnOverlay] = useState(false);
   const navigate = useNavigate();
-
   const location = useLocation();
 
   const isCadastroActive =
     location.pathname === "/cadastro-banda" ||
     location.pathname === "/cadastro-usuario";
 
-  if (loading) return <Loading />;
+  const profilePath =
+    type === "band"
+      ? `/perfil-banda/${user?.id}`
+      : `/perfil-usuario/${user?.id}`;
 
   useEffect(() => {
     function handleEsc(e) {
-      if (e.key === "Escape") setShowModal(false);
+      if (e.key === "Escape") {
+        setShowModal(false);
+      }
     }
 
     window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
   }, []);
 
-  function handleSelect(type) {
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showModal]);
+
+  function handleSelect(accountType) {
     setShowModal(false);
 
-    if (type === "band") {
+    if (accountType === "band") {
       navigate("/cadastro-banda");
     } else {
       navigate("/cadastro-usuario");
     }
   }
 
-  const profilePath =
-    type === "band"
-      ? `/perfil-banda/${user?.id}`
-      : `/perfil-usuario/${user?.id}`;
+  function openModal() {
+    setShowModal(true);
+  }
+
+  function closeModal() {
+    setShowModal(false);
+  }
+
+  function handleOverlayMouseDown(e) {
+    if (e.target === e.currentTarget) {
+      setCanCloseOnOverlay(true);
+    } else {
+      setCanCloseOnOverlay(false);
+    }
+  }
+
+  function handleOverlayMouseUp(e) {
+    if (e.target === e.currentTarget && canCloseOnOverlay) {
+      closeModal();
+    }
+
+    setCanCloseOnOverlay(false);
+  }
+
+  if (loading) return <Loading />;
 
   return (
     <>
@@ -62,7 +103,7 @@ const Navbar = () => {
 
               <button
                 className={`nav-button ${isCadastroActive ? "active" : ""}`}
-                onClick={() => setShowModal(true)}
+                onClick={openModal}
               >
                 Cadastrar
               </button>
@@ -74,10 +115,19 @@ const Navbar = () => {
       </nav>
 
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <button className="close-icon" onClick={() => setShowModal(false)}>
-              ✕
+        <div
+          className="modal-overlay"
+          onMouseDown={handleOverlayMouseDown}
+          onMouseUp={handleOverlayMouseUp}
+        >
+          <div className="modal" onMouseDown={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="close-icon"
+              onClick={closeModal}
+              aria-label="Fechar modal"
+            >
+              <FiX />
             </button>
 
             <h2>Como deseja se cadastrar?</h2>

@@ -25,14 +25,29 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* HEADER */
 .modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     padding: 16px 20px;
     border-bottom: 1px solid #2a2a2a;
+    background: var(--onyx);
 }
 
 .modal-header h2 {
@@ -40,6 +55,37 @@
     color: var(--ghost-white);
     font-size: 22px;
     font-weight: 700;
+    padding-right: 12px;
+}
+
+/* BOTÃO X */
+.close-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: #ccc;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-size: 22px;
+}
+
+.close-icon:hover {
+    background: #1f1f23;
+    color: var(--ghost-white);
+}
+
+.close-icon:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* FORM */
@@ -119,7 +165,7 @@
     height: 110px;
     border-radius: 50%;
     overflow: hidden;
-    border: 4px solid var(--onyx);
+    border: 5px solid var(--onyx);
     background: #1c1c1c;
     display: flex;
     align-items: center;
@@ -168,14 +214,6 @@
     opacity: 1;
 }
 
-/* label texto ao lado (aparece sob a foto) */
-/* .profile-label p {
-    margin: 0;
-    color: var(--ghost-white);
-    font-size: 13px;
-    margin-left: 10px;
-} */
-
 /* inputs */
 .edit-form input[type="text"],
 .edit-form input[type="number"],
@@ -210,8 +248,7 @@
     font-weight: 700;
 }
 
-/* rows de inputs: flex com gap, inputs ocupam igualmente.
-   .location-row tem 3 inputs — também compartilham o espaço sem overflow. */
+/* rows */
 .row {
     display: flex;
     gap: 10px;
@@ -222,7 +259,6 @@
     min-width: 0;
 }
 
-/* localização - mesma regra, evita diferença de espaço extra */
 .location-row input {
     flex: 1 1 0;
     min-width: 0;
@@ -282,7 +318,8 @@
     opacity: 0.8;
 }
 
-.save-btn:disabled {
+.save-btn:disabled,
+.cancel-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
@@ -311,5 +348,11 @@
 
     .cover-area {
         margin-bottom: 20px;
+    }
+
+    .row,
+    .member-row {
+        flex-direction: column;
+        align-items: stretch;
     }
 }
