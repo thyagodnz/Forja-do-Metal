@@ -1,9 +1,12 @@
 import "./EditBandProfileModal.css";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
+import { useAuth } from "../../contexts/AuthContext";
 import { FiCamera, FiMusic, FiX } from "react-icons/fi";
 
 export default function EditProfileModal({ band, onClose, onUpdated }) {
+    const { user: loggedUser, refreshAuth } = useAuth();
+
     const [form, setForm] = useState({
         name: band.name || "",
         description: band.description || "",
@@ -140,7 +143,13 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
-            onUpdated(response.data);
+            const updatedBand = response.data;
+
+            if (loggedUser?.id === updatedBand.id) {
+                await refreshAuth();
+            }
+
+            onUpdated(updatedBand);
         } catch (err) {
             console.error(err);
             setError("Erro ao salvar alterações. Tente novamente.");
@@ -210,10 +219,7 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                                 disabled={submitting}
                             />
 
-                            <div
-                                className="profile-preview"
-                                title="Alterar foto do perfil"
-                            >
+                            <div className="profile-preview" title="Alterar foto do perfil">
                                 {profilePreview ? (
                                     <img src={profilePreview} alt="preview" />
                                 ) : (

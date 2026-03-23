@@ -4,21 +4,25 @@ import api from "../services/api"
 const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
-
     const [user, setUser] = useState(null)
     const [type, setType] = useState(null)
     const [loading, setLoading] = useState(true)
 
-    async function checkAuth() {
+    async function refreshAuth() {
         try {
             const response = await api.get("/auth/me")
 
             setUser(response.data.user)
             setType(response.data.type)
-
         } catch {
             setUser(null)
             setType(null)
+        }
+    }
+
+    async function checkAuth() {
+        try {
+            await refreshAuth()
         } finally {
             setLoading(false)
         }
@@ -46,6 +50,7 @@ export function AuthProvider({ children }) {
                 type,
                 setUser,
                 setType,
+                refreshAuth,
                 logout,
                 loading,
                 isAuthenticated: !!user

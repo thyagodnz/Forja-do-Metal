@@ -40,11 +40,9 @@
     position: sticky;
     top: 0;
     z-index: 20;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding: 16px 20px;
     border-bottom: 1px solid #2a2a2a;
     background: var(--onyx);
@@ -63,12 +61,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 38px;
     height: 38px;
-
     flex-shrink: 0;
-
     background: transparent;
     border: none;
     border-radius: 50%;
@@ -97,73 +92,37 @@
     box-sizing: border-box;
 }
 
-/* COVER AREA (capa + foto sobreposta) */
-.cover-area {
+/* ÁREA SUPERIOR */
+.cover-area-user {
     position: relative;
     width: 100%;
-    min-height: 160px;
-    margin-bottom: 40px;
+    min-height: 150px;
 }
 
-/* COVER PREVIEW - clique pra alterar */
-.cover-label {
-    display: block;
+/* CAPA VISUAL SEM UPLOAD */
+.cover-preview.user-cover-preview {
     width: 100%;
-    cursor: pointer;
-}
-
-.cover-preview {
-    width: 100%;
-    height: 180px;
+    height: 100px;
     border-radius: 5px;
     background: radial-gradient(circle at top, #1a1a1a, #0f0f0f);
-    background-size: cover;
-    background-position: center;
     border: 1px solid #2b2b2b;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
 }
 
-/* overlay do ícone e texto - aparece no hover */
-.cover-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: #ddd;
-    background: rgba(0, 0, 0, 0.35);
-    opacity: 0;
-    transition: opacity 0.18s ease;
-    font-size: 14px;
-    pointer-events: none;
-}
-
-.cover-preview:hover .cover-overlay {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* PROFILE PREVIEW - sobreposta na parte inferior da capa */
-.profile-label {
+/* FOTO DE PERFIL DO USUÁRIO */
+.user-profile-label {
     position: absolute;
     left: 13px;
-    bottom: -60px;
+    bottom: -10px;
     display: flex;
     align-items: center;
-    gap: 12px;
     cursor: pointer;
     z-index: 5;
 }
 
-.profile-preview {
+.user-profile-preview {
     width: 110px;
     height: 110px;
-    border-radius: 50%;
+    border-radius: 18px;
     overflow: hidden;
     border: 5px solid var(--onyx);
     background: #1c1c1c;
@@ -174,29 +133,25 @@
     font-size: 14px;
 }
 
-.profile-preview img {
+.user-profile-preview img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.modal-placeholder {
+.user-modal-placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 100%;
     height: 100%;
-
     font-size: 40px;
     color: #aaa;
-
     background: #2a2a2a;
-    border-radius: 50%;
 }
 
-/* overlay ícone no avatar */
-.profile-overlay {
+/* OVERLAY DA FOTO */
+.user-profile-overlay {
     position: absolute;
     inset: 0;
     display: flex;
@@ -207,18 +162,18 @@
     background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     transition: opacity 0.14s ease;
-    font-weight: 10px;
+    font-size: 13px;
+    text-align: center;
+    padding: 8px;
 }
 
-.profile-preview:hover .profile-overlay {
+.user-profile-preview:hover .user-profile-overlay {
     opacity: 1;
 }
 
-/* inputs */
+/* INPUTS */
 .edit-form input[type="text"],
-.edit-form input[type="number"],
-.edit-form textarea,
-.edit-form select {
+.edit-form textarea {
     background: #1c1c1c;
     border: 1px solid #2a2a2a;
     padding: 10px 12px;
@@ -231,52 +186,24 @@
 }
 
 .edit-form input:focus,
-.edit-form select:focus,
 .edit-form textarea:focus {
     border: 1px solid #ff4d4d;
 }
 
-/* textarea */
+/* TEXTAREA */
 .edit-form textarea {
-    min-height: 120px;
+    min-height: 140px;
     resize: none;
 }
 
+/* TÍTULOS */
 .edit-form h4 {
     margin-bottom: 0;
     color: var(--ghost-white);
     font-weight: 700;
 }
 
-/* rows */
-.row {
-    display: flex;
-    gap: 10px;
-}
-
-.row input {
-    flex: 1 1 0;
-    min-width: 0;
-}
-
-.location-row input {
-    flex: 1 1 0;
-    min-width: 0;
-}
-
-/* membros */
-.member-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.member-row input {
-    flex: 1 1 0;
-    min-width: 0;
-}
-
-/* ações */
+/* AÇÕES */
 .modal-actions {
     display: flex;
     justify-content: flex-end;
@@ -324,35 +251,48 @@
     cursor: not-allowed;
 }
 
-/* erros */
+/* ERRO */
 .error-form {
     color: #ff8b8b;
     margin: 0;
 }
 
-/* responsivo */
+/* RESPONSIVO */
 @media (max-width: 720px) {
-    .profile-label {
+    .user-profile-label {
         left: 10px;
-        bottom: -40px;
+        bottom: -5px;
     }
 
-    .profile-preview {
+    .user-profile-preview {
         width: 90px;
         height: 90px;
+        border-radius: 14px;
     }
 
-    .cover-preview {
-        height: 140px;
+    .user-modal-placeholder {
+        border-radius: 14px;
     }
 
-    .cover-area {
-        margin-bottom: 20px;
+    .cover-preview.user-cover-preview {
+        height: 100px;
     }
 
-    .row,
-    .member-row {
-        flex-direction: column;
-        align-items: stretch;
+    /* .cover-area {
+        
+    } */
+
+    .modal-header {
+        padding: 14px 16px;
+    }
+
+    .modal-header h2 {
+        font-size: 18px;
+    }
+
+    .close-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 20px;
     }
 }
