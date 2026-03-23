@@ -12,10 +12,10 @@ const storage = new CloudinaryStorage({
     let transformation = [];
 
     if (req.baseUrl.includes("/bands")) {
-      folder = `forja-do-metal/bands/${resourceId}`;
-
       if (file.fieldname === "profilePicture") {
+        folder = `forja-do-metal/bands/${resourceId}`;
         public_id = "profile";
+
         transformation = [
           {
             width: 400,
@@ -29,7 +29,9 @@ const storage = new CloudinaryStorage({
       }
 
       if (file.fieldname === "coverPicture") {
+        folder = `forja-do-metal/bands/${resourceId}`;
         public_id = "cover";
+
         transformation = [
           {
             width: 1500,
@@ -40,13 +42,31 @@ const storage = new CloudinaryStorage({
           },
         ];
       }
+
+      if (file.fieldname.startsWith("memberPhoto_")) {
+        const memberId = file.fieldname.replace("memberPhoto_", "");
+
+        folder = `forja-do-metal/bands/${resourceId}/members`;
+        public_id = `member-${memberId}`;
+
+        transformation = [
+          {
+            width: 400,
+            height: 400,
+            crop: "fill",
+            gravity: "face",
+            quality: "auto",
+            fetch_format: "webp",
+          },
+        ];
+      }
     }
 
     if (req.baseUrl.includes("/users")) {
-      folder = `forja-do-metal/users/${resourceId}`;
-
       if (file.fieldname === "profilePicture") {
+        folder = `forja-do-metal/users/${resourceId}`;
         public_id = "profile";
+
         transformation = [
           {
             width: 400,

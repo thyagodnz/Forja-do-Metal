@@ -12,13 +12,10 @@ router.get("/:id", BandController.getBandById)
 router.delete("/:id", BandController.deleteBand)
 
 router.put(
-    "/:id",
-    auth,
-    upload.fields([
-        { name: "profilePicture", maxCount: 1 },
-        { name: "coverPicture", maxCount: 1 },
-    ]),
-    BandController.updateBand
-)
+  "/:id",
+  auth,
+  upload.any(),
+  BandController.updateBand
+);
 
 export default router

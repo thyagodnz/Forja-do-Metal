@@ -4,6 +4,10 @@ import api from "../../services/api";
 import { useAuth } from "../../contexts/AuthContext";
 import { FiCamera, FiMusic, FiX } from "react-icons/fi";
 
+function createTempMemberId() {
+    return `temp-${crypto.randomUUID()}`;
+}
+
 export default function EditProfileModal({ band, onClose, onUpdated }) {
     const { user: loggedUser, refreshAuth } = useAuth();
 
@@ -15,8 +19,11 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
         address: { ...(band.address || { region: "", state: "", city: "" }) },
         members:
             band.members && band.members.length
-                ? band.members.map((m) => ({ ...m }))
-                : [{ name: "", instrument: "" }],
+                ? band.members.map((member) => ({
+                      ...member,
+                      id: member.id || createTempMemberId(),
+                  }))
+                : [{ id: createTempMemberId(), name: "", instrument: "" }],
     });
 
     const [profileFile, setProfileFile] = useState(null);
@@ -35,6 +42,7 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
             if (profilePreview && profilePreview.startsWith("blob:")) {
                 URL.revokeObjectURL(profilePreview);
             }
+
             if (coverPreview && coverPreview.startsWith("blob:")) {
                 URL.revokeObjectURL(coverPreview);
             }
@@ -70,24 +78,42 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
         }));
     }
 
-    function handleMemberChange(idx, e) {
+    function handleMemberChange(memberId, e) {
         const { name, value } = e.target;
-        const updated = [...form.members];
-        updated[idx][name] = value;
-        setForm((prev) => ({ ...prev, members: updated }));
+
+        setForm((prev) => ({
+            ...prev,
+            members: prev.members.map((member) =>
+                member.id === memberId
+                    ? { ...member, [name]: value }
+                    : member
+            ),
+        }));
     }
 
     function addMember() {
         setForm((prev) => ({
             ...prev,
-            members: [...prev.members, { name: "", instrument: "" }],
+            members: [
+                ...prev.members,
+                {
+                    id: createTempMemberId(),
+                    name: "",
+                    instrument: "",
+                    photo: "",
+                    bio: "",
+                },
+            ],
         }));
     }
 
-    function removeMember(idx) {
+    function removeMember(memberId) {
         if (form.members.length === 1) return;
-        const updated = form.members.filter((_, i) => i !== idx);
-        setForm((prev) => ({ ...prev, members: updated }));
+
+        setForm((prev) => ({
+            ...prev,
+            members: prev.members.filter((member) => member.id !== memberId),
+        }));
     }
 
     function handleProfileImage(e) {
@@ -127,7 +153,6 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
             formData.append("description", form.description);
             formData.append("year", form.year);
             formData.append("musicalGenre", form.musicalGenre);
-
             formData.append("address", JSON.stringify(form.address));
             formData.append("members", JSON.stringify(form.members));
 
@@ -252,7 +277,10 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                         placeholder="Descrição"
                         value={form.description}
                         onChange={(e) =>
-                            setForm((prev) => ({ ...prev, description: e.target.value }))
+                            setForm((prev) => ({
+                                ...prev,
+                                description: e.target.value,
+                            }))
                         }
                         disabled={submitting}
                     />
@@ -314,31 +342,33 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                     </div>
 
                     <h4>Membros e Instrumentos</h4>
-                    {form.members.map((member, idx) => (
-                        <div className="member-row" key={idx}>
+                    {form.members.map((member) => (
+                        <div className="member-row" key={member.id}>
                             <input
                                 type="text"
                                 name="name"
                                 placeholder="Nome"
                                 value={member.name}
-                                onChange={(e) => handleMemberChange(idx, e)}
+                                onChange={(e) => handleMemberChange(member.id, e)}
                                 disabled={submitting}
                                 required
                             />
+
                             <input
                                 type="text"
                                 name="instrument"
                                 placeholder="Instrumento"
                                 value={member.instrument}
-                                onChange={(e) => handleMemberChange(idx, e)}
+                                onChange={(e) => handleMemberChange(member.id, e)}
                                 disabled={submitting}
                                 required
                             />
+
                             {form.members.length > 1 && (
                                 <button
                                     type="button"
                                     className="remove-btn"
-                                    onClick={() => removeMember(idx)}
+                                    onClick={() => removeMember(member.id)}
                                     disabled={submitting}
                                 >
                                     Remover
@@ -367,6 +397,7 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                         >
                             Cancelar
                         </button>
+
                         <button type="submit" className="save-btn" disabled={submitting}>
                             {submitting ? "Salvando..." : "Salvar"}
                         </button>

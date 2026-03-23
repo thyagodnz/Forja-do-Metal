@@ -23,22 +23,30 @@ const addressBand = new mongoose.Schema(
   { _id: false },
 );
 
-const memberSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    instrument: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+const memberSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
   },
-  { _id: false },
-);
+
+  instrument: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+
+  photo: {
+    type: String,
+    default: "",
+  },
+
+  bio: {
+    type: String,
+    trim: true,
+    default: "",
+  },
+});
 
 const socialLinksSchema = new mongoose.Schema(
   {
@@ -134,6 +142,14 @@ bandSchema.set("toJSON", {
     delete ret._id;
     delete ret.__v;
     delete ret.password;
+
+    if (ret.members) {
+      ret.members = ret.members.map((member) => {
+        member.id = member._id;
+        delete member._id;
+        return member;
+      });
+    }
 
     return ret;
   },
