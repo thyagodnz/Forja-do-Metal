@@ -10,6 +10,7 @@ import { getUsers } from './User/getUsers.js'
 import { deleteUser } from './User/deleteUser.js'
 import { updateUser } from './User/updateUser.js'
 import { getUserById } from './User/getUserById.js'
+import { toggleFavoriteBand } from './User/toggleFavoriteBand.js'
 
 import { login } from './Auth/login.js'
 import { logout } from './Auth/logout.js'
@@ -30,6 +31,7 @@ export const UserController = {
     deleteUser,
     updateUser,
     getUserById,
+    toggleFavoriteBand,
 }
 
 export const AuthController = {

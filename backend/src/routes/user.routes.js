@@ -9,6 +9,8 @@ router.get("/", UserController.getUsers)
 router.get("/:id", UserController.getUserById)
 router.post("/", UserController.createUser)
 
+router.patch("/favorites/:bandId", auth, UserController.toggleFavoriteBand);
+
 router.put(
     "/:id",
     auth,

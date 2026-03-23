@@ -15,18 +15,21 @@ import {
   FiHeart,
   FiLogOut,
   FiEdit,
+  FiMusic
 } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 
 export default function UserProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { user: loggedUser, logout } = useAuth();
+  const { user: loggedUser, type, logout, refreshAuth } = useAuth();
 
   const [profileUser, setProfileUser] = useState(null);
   const [activeTab, setActiveTab] = useState("favorites");
   const [loadingUser, setLoadingUser] = useState(true);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [favoriteLoadingId, setFavoriteLoadingId] = useState(null);
 
   useEffect(() => {
     async function loadUser() {
@@ -54,6 +57,30 @@ export default function UserProfile() {
     setIsEditOpen(false);
   }
 
+  function getFavoriteBandIds() {
+    if (!loggedUser?.favoriteBands) return [];
+
+    return loggedUser.favoriteBands.map((favorite) =>
+      typeof favorite === "string" ? favorite : favorite.id || favorite._id
+    );
+  }
+
+  async function handleToggleFavorite(bandId) {
+    try {
+      setFavoriteLoadingId(bandId);
+
+      await api.patch(`/users/favorites/${bandId}`);
+      await refreshAuth();
+
+      const response = await api.get(`/users/${id}`);
+      setProfileUser(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setFavoriteLoadingId(null);
+    }
+  }
+
   if (loadingUser) {
     return <Loading />;
   }
@@ -63,6 +90,7 @@ export default function UserProfile() {
   }
 
   const isOwner = loggedUser && loggedUser.id === profileUser.id;
+  const favoriteBandIds = getFavoriteBandIds();
 
   return (
     <div className="user-profile-container">
@@ -138,31 +166,55 @@ export default function UserProfile() {
         {activeTab === "favorites" && (
           <div className="favorites-tab">
             {profileUser.favoriteBands && profileUser.favoriteBands.length > 0 ? (
-              profileUser.favoriteBands.map((band) => (
-                <div
-                  key={band.id}
-                  className="favorite-band-card"
-                  onClick={() => navigate(`/perfil-banda/${band.id}`)}
-                >
-                  <div className="favorite-band-image">
-                    {band.profilePicture ? (
-                      <img src={band.profilePicture} alt={band.name} />
-                    ) : (
-                      <div className="favorite-band-placeholder">
-                        <FiHeart />
+              profileUser.favoriteBands.map((band) => {
+                const isFavorite =
+                  type === "user" && favoriteBandIds.includes(band.id);
+
+                return (
+                  <div key={band.id} className="favorite-band-card">
+                    <div
+                      className="favorite-band-clickable"
+                      onClick={() => navigate(`/perfil-banda/${band.id}`)}
+                    >
+                      <div className="favorite-band-image">
+                        {band.profilePicture ? (
+                          <img src={band.profilePicture} alt={band.name} />
+                        ) : (
+                          <div className="favorite-band-placeholder">
+                            <FiMusic />
+                          </div>
+                        )}
                       </div>
+
+                      <div className="favorite-band-info">
+                        <h3>{band.name}</h3>
+                      </div>
+                    </div>
+
+                    {isOwner && type === "user" && (
+                      <button
+                        className={`favorite-button ${
+                          isFavorite ? "favorited" : ""
+                        }`}
+                        onClick={() => handleToggleFavorite(band.id)}
+                        disabled={favoriteLoadingId === band.id}
+                        aria-label={
+                          isFavorite
+                            ? "Remover banda dos favoritos"
+                            : "Adicionar banda aos favoritos"
+                        }
+                        title={
+                          isFavorite
+                            ? "Remover dos favoritos"
+                            : "Adicionar aos favoritos"
+                        }
+                      >
+                        {isFavorite ? <FaHeart /> : <FiHeart />}
+                      </button>
                     )}
                   </div>
-
-                  <div className="favorite-band-info">
-                    <h3>{band.name}</h3>
-                    <p>
-                      {band.musicalGenre} • {band.address?.city},{" "}
-                      {band.address?.state}
-                    </p>
-                  </div>
-                </div>
-              ))
+                );
+              })
             ) : (
               <div className="empty-tab">Nenhuma banda favoritada</div>
             )}

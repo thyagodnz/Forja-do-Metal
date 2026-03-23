@@ -27,7 +27,7 @@
     display: flex;
     align-items: center;
     gap: 25px;
-    padding: 20px;
+    padding: 20px 30px;
     position: relative;
 }
 
@@ -65,10 +65,10 @@
 
     font-size: 50px;
     color: #aaa;
-    
+
     background: #2a2a2a;
     border-radius: 50%;
-    
+
     position: absolute;
     border: 5px solid var(--carbon-black);
 }
@@ -80,6 +80,7 @@
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
+    gap: 20px;
 }
 
 /* INFO */
@@ -113,16 +114,50 @@
     color: #888;
 }
 
-/* MODAL EDITAR PERFIL*/
+/* ACTION BUTTONS */
 
 .action-buttons {
     display: flex;
     gap: 10px;
     align-items: center;
     margin-left: auto;
+    flex-shrink: 0;
 }
 
-/* botão editar */
+/* FAVORITE */
+
+.favorite-button {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid #333;
+    background: transparent;
+    color: var(--ghost-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.favorite-button:hover {
+    background: #1f1f23;
+}
+
+.favorite-button.favorited {
+    color: #e63946;
+    border-color: #e63946;
+}
+
+.favorite-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* EDITAR */
+
 .edit-button {
     background: transparent;
     border: 1px solid #333;
@@ -134,6 +169,7 @@
     font-weight: 600;
     font-size: 16px;
     transition: 0.2s ease;
+    white-space: nowrap;
 }
 
 .edit-button:hover {
@@ -141,6 +177,7 @@
 }
 
 /* LOGOUT */
+
 .logout-button {
     background: #e63946;
     border: 1px solid #e63946;
@@ -152,6 +189,7 @@
     font-weight: 600;
     font-size: 16px;
     transition: 0.2s ease;
+    white-space: nowrap;
 }
 
 .logout-button:hover {
@@ -162,7 +200,10 @@
 .logout-button {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
+    height: 40px;
+    flex-shrink: 0;
 }
 
 /* TABS */
@@ -180,7 +221,6 @@
     border: none;
     color: #aaa;
     cursor: pointer;
-    transition: 0.2s;
     font: inherit;
     font-weight: 700;
     transition: 0.2s ease;
@@ -198,7 +238,7 @@
 /* CONTENT */
 
 .profile-content {
-    padding: 40px;
+    padding: 30px;
 }
 
 /* ABOUT */
@@ -240,4 +280,52 @@
 .empty-tab {
     color: #777;
     margin: 0;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 720px) {
+    .profile-cover {
+        height: 170px;
+    }
+
+    .profile-header {
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .profile-image {
+        width: 110px;
+        height: 110px;
+        margin-top: -70px;
+    }
+
+    .profile-info h1 {
+        font-size: 28px;
+    }
+
+    .profile-top-row {
+        gap: 12px;
+    }
+
+    .action-buttons {
+        gap: 8px;
+    }
+
+    .edit-button,
+    .logout-button {
+        height: 34px;
+        font-size: 14px;
+        padding: 0 14px;
+    }
+
+    .favorite-button {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+    }
+
+    .profile-content {
+        padding: 24px;
+    }
 }

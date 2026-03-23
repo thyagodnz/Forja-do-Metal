@@ -15,18 +15,21 @@ import {
   FiCalendar,
   FiEdit,
   FiLogOut,
+  FiHeart,
 } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 
 export default function BandProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { user, logout } = useAuth();
+  const { user, type, logout, refreshAuth } = useAuth();
 
   const [band, setBand] = useState(null);
   const [activeTab, setActiveTab] = useState("about");
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [loadingBand, setLoadingBand] = useState(true);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
 
   useEffect(() => {
     async function loadBand() {
@@ -54,6 +57,26 @@ export default function BandProfile() {
     setIsEditOpen(false);
   }
 
+  function getFavoriteBandIds() {
+    if (!user?.favoriteBands) return [];
+
+    return user.favoriteBands.map((favorite) =>
+      typeof favorite === "string" ? favorite : favorite.id || favorite._id
+    );
+  }
+
+  async function handleToggleFavorite() {
+    try {
+      setFavoriteLoading(true);
+      await api.patch(`/users/favorites/${band.id}`);
+      await refreshAuth();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setFavoriteLoading(false);
+    }
+  }
+
   if (loadingBand) {
     return <Loading />;
   }
@@ -62,11 +85,13 @@ export default function BandProfile() {
     return <p className="empty-tab">Banda não encontrada</p>;
   }
 
-  const isOwner = user && user.id === band.id;
+  const isOwner = type === "band" && user && user.id === band.id;
+  const isUserAccount = type === "user";
+  const favoriteBandIds = getFavoriteBandIds();
+  const isFavorite = isUserAccount && favoriteBandIds.includes(band.id);
 
   return (
     <div className="profile-container">
-      {/* CAPA */}
       <div
         className="profile-cover"
         style={
@@ -76,9 +101,7 @@ export default function BandProfile() {
         }
       ></div>
 
-      {/* HEADER */}
       <div className="profile-header">
-        {/* FOTO PERFIL */}
         <div className="profile-image">
           {band.profilePicture ? (
             <img src={band.profilePicture} alt={band.name} />
@@ -89,7 +112,6 @@ export default function BandProfile() {
           )}
         </div>
 
-        {/* INFO + BOTÕES */}
         <div className="profile-top-row">
           <div className="profile-info">
             <h1>{band.name}</h1>
@@ -115,26 +137,47 @@ export default function BandProfile() {
             </div>
           </div>
 
-          {isOwner && (
-            <div className="action-buttons">
+          <div className="action-buttons">
+            {isUserAccount && (
               <button
-                className="edit-button"
-                onClick={() => setIsEditOpen(true)}
+                className={`favorite-button ${isFavorite ? "favorited" : ""}`}
+                onClick={handleToggleFavorite}
+                disabled={favoriteLoading}
+                aria-label={
+                  isFavorite
+                    ? "Remover banda dos favoritos"
+                    : "Adicionar banda aos favoritos"
+                }
+                title={
+                  isFavorite
+                    ? "Remover dos favoritos"
+                    : "Adicionar aos favoritos"
+                }
               >
-                <FiEdit />
-                Editar perfil
+                {isFavorite ? <FaHeart /> : <FiHeart />}
               </button>
+            )}
 
-              <button className="logout-button" onClick={handleLogout}>
-                <FiLogOut />
-                Sair
-              </button>
-            </div>
-          )}
+            {isOwner && (
+              <>
+                <button
+                  className="edit-button"
+                  onClick={() => setIsEditOpen(true)}
+                >
+                  <FiEdit />
+                  Editar perfil
+                </button>
+
+                <button className="logout-button" onClick={handleLogout}>
+                  <FiLogOut />
+                  Sair
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* TABS */}
       <div className="profile-tabs">
         <button
           className={activeTab === "about" ? "active" : ""}
@@ -165,7 +208,6 @@ export default function BandProfile() {
         </button>
       </div>
 
-      {/* CONTEÚDO */}
       <div className="profile-content">
         {activeTab === "about" && (
           <div className="about-tab">

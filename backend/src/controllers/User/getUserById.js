@@ -6,10 +6,7 @@ export async function getUserById(req, res) {
 
     const user = await User.findById(id)
       .select("name bio profilePicture favoriteBands createdAt")
-      .populate(
-        "favoriteBands",
-        "name profilePicture"
-      );
+      .populate("favoriteBands", "name profilePicture");
 
     if (!user) {
       return res.status(404).json({

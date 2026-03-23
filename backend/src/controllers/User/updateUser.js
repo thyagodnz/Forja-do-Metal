@@ -21,8 +21,10 @@ export async function updateUser(req, res) {
     const updated = await User.findByIdAndUpdate(
       id,
       { $set: data },
-      { new: true, runValidators: true }
-    ).select("name bio profilePicture favoriteBands createdAt");
+      { new: true, runValidators: true },
+    )
+      .select("name bio profilePicture favoriteBands createdAt")
+      .populate("favoriteBands", "name profilePicture");
 
     if (!updated) {
       return res.status(404).json({ message: "Usuário não encontrado" });
