@@ -18,6 +18,7 @@ import {
   FiLogOut,
   FiHeart,
   FiChevronDown,
+  FiUser,
 } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 
@@ -68,12 +69,16 @@ export default function BandProfile() {
     if (!user?.favoriteBands) return [];
 
     return user.favoriteBands.map((favorite) =>
-      typeof favorite === "string" ? favorite : favorite.id || favorite._id
+      typeof favorite === "string" ? favorite : favorite.id || favorite._id,
     );
   }
 
   function isRealMemberId(memberId) {
-    return !!memberId && typeof memberId === "string" && !memberId.startsWith("temp-");
+    return (
+      !!memberId &&
+      typeof memberId === "string" &&
+      !memberId.startsWith("temp-")
+    );
   }
 
   async function handleToggleFavorite() {
@@ -104,7 +109,7 @@ export default function BandProfile() {
       setMemberSubmitting(true);
 
       const updatedMembers = band.members.map((member) =>
-        member.id === memberId ? { ...member, bio } : member
+        member.id === memberId ? { ...member, bio } : member,
       );
 
       const formData = new FormData();
@@ -296,12 +301,14 @@ export default function BandProfile() {
                   onClick={() => handleToggleMember(member.id)}
                 >
                   <div className="member-card-header">
-                    <div className={`member-photo ${isExpanded ? "expanded" : ""}`}>
+                    <div
+                      className={`member-photo ${isExpanded ? "expanded" : ""}`}
+                    >
                       {member.photo ? (
                         <img src={member.photo} alt={member.name} />
                       ) : (
                         <div className="member-photo-placeholder">
-                          <FiMusic />
+                          <FiUser />
                         </div>
                       )}
                     </div>
@@ -314,9 +321,8 @@ export default function BandProfile() {
                     </div>
 
                     <span
-                      className={`member-expand-icon ${
-                        isExpanded ? "expanded" : ""
-                      }`}
+                      className={`member-expand-icon ${isExpanded ? "expanded" : ""
+                        }`}
                     >
                       <FiChevronDown />
                     </span>
@@ -325,7 +331,11 @@ export default function BandProfile() {
                   {isExpanded && (
                     <div className="member-extra-content">
                       {member.bio ? (
-                        <p className="member-bio">{member.bio}</p>
+                        member.bio.split("\n").map((line, index) => (
+                          <p className="member-bio" key={index}>
+                            {line}
+                          </p>
+                        ))
                       ) : (
                         <p className="member-empty-bio">Sem bio</p>
                       )}

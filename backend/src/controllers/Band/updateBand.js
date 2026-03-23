@@ -1,5 +1,6 @@
 import Band from "../../models/Band.js";
 import { deleteCloudinaryAssetByUrl } from "../../utils/deleteCloudinaryAssetByUrl.js";
+import { sortBandMembers } from "../../utils/sortBandMembers.js";
 
 function isTempId(id) {
   return typeof id === "string" && id.startsWith("temp-");
@@ -61,14 +62,12 @@ export async function updateBand(req, res) {
       .map((member) => String(member.id || member._id))
       .filter((memberId) => !isTempId(memberId));
 
-    // 1. apagar fotos dos membros removidos
     for (const oldMember of oldMembers) {
       if (!newMemberIds.includes(oldMember.id) && oldMember.photo) {
         await deleteCloudinaryAssetByUrl(oldMember.photo);
       }
     }
 
-    // 2. aplicar uploads de fotos dos membros
     for (const file of files) {
       if (file.fieldname.startsWith("memberPhoto_")) {
         const memberId = file.fieldname.replace("memberPhoto_", "");
@@ -80,7 +79,6 @@ export async function updateBand(req, res) {
         if (memberIndex !== -1) {
           const currentMember = data.members[memberIndex];
 
-          // se o membro já existia e tinha foto antiga, apaga a antiga
           if (
             currentMember.photo &&
             typeof currentMember.photo === "string" &&
@@ -94,27 +92,25 @@ export async function updateBand(req, res) {
       }
     }
 
-    // 3. normaliza membros para o Mongoose
     data.members = data.members.map((member) => {
       const normalizedMember = { ...member };
 
       if (normalizedMember.id && !normalizedMember._id) {
-        // membro existente
         if (!isTempId(normalizedMember.id)) {
           normalizedMember._id = normalizedMember.id;
         }
       }
 
-      // remove id frontend sempre
       delete normalizedMember.id;
 
-      // se _id vier temporário, remove para o Mongoose gerar um novo
       if (normalizedMember._id && isTempId(String(normalizedMember._id))) {
         delete normalizedMember._id;
       }
 
       return normalizedMember;
     });
+
+    data.members = sortBandMembers(data.members);
 
     const updated = await Band.findByIdAndUpdate(
       id,
