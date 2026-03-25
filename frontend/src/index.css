@@ -13,6 +13,11 @@ body {
     padding: 0;
 }
 
+input:focus,
+textarea:focus {
+    outline: none;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }

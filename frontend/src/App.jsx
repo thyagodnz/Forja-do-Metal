@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar/Navbar.jsx"
 import Home from "./pages/Home/Home.jsx"
 import Bands from "./pages/Bands/Bands.jsx"
 import Shows from "./pages/Shows/Shows.jsx"
+import Albums from "./pages/Albums/Albums.jsx"
 import Login from "./pages/Auth/Login/Login.jsx"
 import RegisterBand from "./pages/Auth/Register/RegisterBand/RegisterBand.jsx"
 import RegisterUser from "./pages/Auth/Register/RegisterUser/RegisterUser.jsx"
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/bandas" element={<Bands />} />
         <Route path="/shows" element={<Shows />} />
+        <Route path="/albuns" element={<Albums />} />
 
         <Route
           path="/login"

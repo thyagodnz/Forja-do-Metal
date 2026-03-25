@@ -96,6 +96,7 @@ const Navbar = () => {
         <div className="nav-links">
           <NavLink to="/bandas">Bandas</NavLink>
           <NavLink to="/shows">Shows</NavLink>
+          <NavLink to="/albuns">Álbuns</NavLink>
 
           {!isAuthenticated ? (
             <>

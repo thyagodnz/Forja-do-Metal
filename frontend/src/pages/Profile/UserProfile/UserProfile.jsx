@@ -5,6 +5,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 import api from "../../../services/api.js";
 import Loading from "../../../components/Loading/Loading.jsx";
 import EditUserProfileModal from "../../../components/EditUserProfileModal/EditUserProfileModal";
+import BandCard from "../../../components/BandCard/BandCard.jsx";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -12,12 +13,9 @@ import { ptBR } from "date-fns/locale";
 import {
   FiUser,
   FiCalendar,
-  FiHeart,
   FiLogOut,
   FiEdit,
-  FiMusic
 } from "react-icons/fi";
-import { FaHeart } from "react-icons/fa";
 
 export default function UserProfile() {
   const { id } = useParams();
@@ -171,48 +169,17 @@ export default function UserProfile() {
                   type === "user" && favoriteBandIds.includes(band.id);
 
                 return (
-                  <div key={band.id} className="favorite-band-card">
-                    <div
-                      className="favorite-band-clickable"
-                      onClick={() => navigate(`/perfil-banda/${band.id}`)}
-                    >
-                      <div className="favorite-band-image">
-                        {band.profilePicture ? (
-                          <img src={band.profilePicture} alt={band.name} />
-                        ) : (
-                          <div className="favorite-band-placeholder">
-                            <FiMusic />
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="favorite-band-info">
-                        <h3>{band.name}</h3>
-                      </div>
-                    </div>
-
-                    {isOwner && type === "user" && (
-                      <button
-                        className={`favorite-button ${
-                          isFavorite ? "favorited" : ""
-                        }`}
-                        onClick={() => handleToggleFavorite(band.id)}
-                        disabled={favoriteLoadingId === band.id}
-                        aria-label={
-                          isFavorite
-                            ? "Remover banda dos favoritos"
-                            : "Adicionar banda aos favoritos"
-                        }
-                        title={
-                          isFavorite
-                            ? "Remover dos favoritos"
-                            : "Adicionar aos favoritos"
-                        }
-                      >
-                        {isFavorite ? <FaHeart /> : <FiHeart />}
-                      </button>
-                    )}
-                  </div>
+                  <BandCard
+                    key={band.id}
+                    band={band}
+                    className="favorite-band-card"
+                    showGenre={false}
+                    showYear={false}
+                    showFavoriteButton={isOwner && type === "user"}
+                    isFavorite={isFavorite}
+                    favoriteDisabled={favoriteLoadingId === band.id}
+                    onFavoriteClick={() => handleToggleFavorite(band.id)}
+                  />
                 );
               })
             ) : (

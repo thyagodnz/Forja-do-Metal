@@ -1,0 +1,130 @@
+.band-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--ghost-white);
+    background-color: var(--onyx);
+    padding: 28px 22px;
+    border-radius: 8px;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+}
+
+.band-card:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background-color: #991412a9;
+}
+
+.band-card-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+}
+
+.band-image {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 12px;
+}
+
+.band-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #2a2a2a;
+    transition: border 0.25s ease;
+}
+
+.band-card:hover .band-image img {
+    border-color: #e6394736;
+}
+
+.band-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 40px;
+    color: #aaa;
+    background: #2a2a2a;
+    border-radius: 50%;
+    border: 2px solid #2a2a2a;
+    transition: border 0.25s ease;
+}
+
+.band-info {
+    text-align: center;
+}
+
+.band-info h3 {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.band-info p {
+    margin: 4px 0 2px;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.band-info span {
+    display: block;
+    font-size: 12px;
+    color: #8f8f8f;
+}
+
+.band-favorite-button {
+    width: 34px;
+    height: 34px;
+    margin-top: 10px;
+    border-radius: 50%;
+    border: 1px solid #333;
+    background: transparent;
+    color: var(--ghost-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.band-favorite-button:hover {
+    background: #2a2a2a;
+}
+
+.band-favorite-button.favorited {
+    color: #e63946;
+    border-color: #e63946;
+}
+
+.band-favorite-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@media (max-width: 720px) {
+    .band-card {
+        padding: 22px 16px;
+    }
+
+    .band-image {
+        width: 95px;
+        height: 95px;
+    }
+
+    .band-info h3 {
+        font-size: 15px;
+    }
+}

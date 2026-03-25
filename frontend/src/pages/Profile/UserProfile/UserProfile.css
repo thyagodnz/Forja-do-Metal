@@ -220,109 +220,7 @@
 }
 
 .favorite-band-card {
-    background: var(--onyx);
-    border-radius: 10px;
-    padding: 30px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    gap: 13px;
-
-    transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    background-color 0.25s ease;
-    
-    animation: fadeUp 0.4s ease forwards;
-}
-
-.favorite-band-card:hover {
-    background: #1f1f23;
-    transform: translateY(-1px) scale(1.02);
-}
-
-.favorite-band-clickable {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    cursor: pointer;
-}
-
-.favorite-band-image {
-    width: 90px;
-    height: 90px;
-    flex-shrink: 0;
-}
-
-.favorite-band-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-.favorite-band-placeholder {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: #2a2a2a;
-    color: #aaa;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-}
-
-.favorite-band-info {
-    width: 100%;
-    text-align: center;
-}
-
-.favorite-band-info h3 {
-    margin: 0;
-    font-size: 15px;
-    color: var(--ghost-white);
-    line-height: 1.3;
-    /* word-break: break-word; */
-}
-
-/* FAVORITE BUTTON */
-
-.favorite-button {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 1px solid #333;
-    background: transparent;
-    color: var(--ghost-white);
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    cursor: pointer;
-    transition: 0.2s ease;
-    font-size: 16px;
-    
-    flex-shrink: 0;
-}
-
-.favorite-button:hover {
-    background: #2a2a2a;
-}
-
-.favorite-button.favorited {
-    color: #e63946;
-    border-color: #e63946;
-}
-
-.favorite-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+    min-height: auto;
 }
 
 /* EMPTY */
@@ -372,26 +270,7 @@
     }
 
     .favorites-tab {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 8px;
-    }
-
-    .favorite-band-card {
-        padding: 24px;
-    }
-
-    .favorite-band-image {
-        width: 80px;
-        height: 80px;
-    }
-
-    .favorite-band-info h3 {
-        font-size: 14px;
-    }
-
-    .favorite-button {
-        width: 34px;
-        height: 34px;
-        font-size: 16px;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 10px;
     }
 }
