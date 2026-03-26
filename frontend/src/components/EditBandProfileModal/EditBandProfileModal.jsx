@@ -1,9 +1,16 @@
 import "./EditBandProfileModal.css";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
-import { FiCamera, FiUser } from "react-icons/fi";
+import { useAuth } from "../../contexts/AuthContext";
+import { FiCamera, FiMusic, FiX } from "react-icons/fi";
+
+function createTempMemberId() {
+    return `temp-${crypto.randomUUID()}`;
+}
 
 export default function EditProfileModal({ band, onClose, onUpdated }) {
+    const { user: loggedUser, refreshAuth } = useAuth();
+
     const [form, setForm] = useState({
         name: band.name || "",
         description: band.description || "",
@@ -12,8 +19,11 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
         address: { ...(band.address || { region: "", state: "", city: "" }) },
         members:
             band.members && band.members.length
-                ? band.members.map((m) => ({ ...m }))
-                : [{ name: "", instrument: "" }],
+                ? band.members.map((member) => ({
+                      ...member,
+                      id: member.id || createTempMemberId(),
+                  }))
+                : [{ id: createTempMemberId(), name: "", instrument: "" }],
     });
 
     const [profileFile, setProfileFile] = useState(null);
@@ -32,6 +42,7 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
             if (profilePreview && profilePreview.startsWith("blob:")) {
                 URL.revokeObjectURL(profilePreview);
             }
+
             if (coverPreview && coverPreview.startsWith("blob:")) {
                 URL.revokeObjectURL(coverPreview);
             }
@@ -45,6 +56,7 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
         function handleKey(e) {
             if (e.key === "Escape") onClose();
         }
+
         window.addEventListener("keydown", handleKey);
 
         return () => {
@@ -66,32 +78,52 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
         }));
     }
 
-    function handleMemberChange(idx, e) {
+    function handleMemberChange(memberId, e) {
         const { name, value } = e.target;
-        const updated = [...form.members];
-        updated[idx][name] = value;
-        setForm((prev) => ({ ...prev, members: updated }));
+
+        setForm((prev) => ({
+            ...prev,
+            members: prev.members.map((member) =>
+                member.id === memberId
+                    ? { ...member, [name]: value }
+                    : member
+            ),
+        }));
     }
 
     function addMember() {
         setForm((prev) => ({
             ...prev,
-            members: [...prev.members, { name: "", instrument: "" }],
+            members: [
+                ...prev.members,
+                {
+                    id: createTempMemberId(),
+                    name: "",
+                    instrument: "",
+                    photo: "",
+                    bio: "",
+                },
+            ],
         }));
     }
 
-    function removeMember(idx) {
+    function removeMember(memberId) {
         if (form.members.length === 1) return;
-        const updated = form.members.filter((_, i) => i !== idx);
-        setForm((prev) => ({ ...prev, members: updated }));
+
+        setForm((prev) => ({
+            ...prev,
+            members: prev.members.filter((member) => member.id !== memberId),
+        }));
     }
 
     function handleProfileImage(e) {
         const file = e.target.files[0];
         if (!file) return;
+
         if (profilePreview && profilePreview.startsWith("blob:")) {
             URL.revokeObjectURL(profilePreview);
         }
+
         setProfileFile(file);
         setProfilePreview(URL.createObjectURL(file));
     }
@@ -99,9 +131,11 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
     function handleCoverImage(e) {
         const file = e.target.files[0];
         if (!file) return;
+
         if (coverPreview && coverPreview.startsWith("blob:")) {
             URL.revokeObjectURL(coverPreview);
         }
+
         setCoverFile(file);
         setCoverPreview(URL.createObjectURL(file));
     }
@@ -119,7 +153,6 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
             formData.append("description", form.description);
             formData.append("year", form.year);
             formData.append("musicalGenre", form.musicalGenre);
-
             formData.append("address", JSON.stringify(form.address));
             formData.append("members", JSON.stringify(form.members));
 
@@ -135,7 +168,13 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
-            onUpdated(response.data);
+            const updatedBand = response.data;
+
+            if (loggedUser?.id === updatedBand.id) {
+                await refreshAuth();
+            }
+
+            onUpdated(updatedBand);
         } catch (err) {
             console.error(err);
             setError("Erro ao salvar alterações. Tente novamente.");
@@ -144,7 +183,7 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
         }
     }
 
-    function handleOverlayClick(e) {
+    function handleOverlayClick() {
         const sel = window.getSelection && window.getSelection();
         if (sel && sel.toString && sel.toString().length > 0) {
             return;
@@ -156,11 +195,20 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
         <div className="edit-modal-overlay" onMouseDown={handleOverlayClick}>
             <div className="edit-modal" onMouseDown={(e) => e.stopPropagation()}>
                 <div className="modal-header">
-                    <h2>Editar perfil</h2>
+                    <h2>Editar perfil da banda</h2>
+
+                    <button
+                        type="button"
+                        className="close-icon"
+                        onClick={onClose}
+                        disabled={submitting}
+                        aria-label="Fechar modal"
+                    >
+                        <FiX />
+                    </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="edit-form">
-                    {/* COVER + PROFILE (sobrepostos) */}
                     <div className="cover-area">
                         <label className="cover-label">
                             <input
@@ -195,12 +243,13 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                                 hidden
                                 disabled={submitting}
                             />
+
                             <div className="profile-preview" title="Alterar foto do perfil">
                                 {profilePreview ? (
                                     <img src={profilePreview} alt="preview" />
                                 ) : (
                                     <div className="modal-placeholder">
-                                        <FiUser />
+                                        <FiMusic />
                                     </div>
                                 )}
 
@@ -212,7 +261,6 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                         </label>
                     </div>
 
-                    {/* FIELDS */}
                     <h4>Nome e Descrição</h4>
                     <input
                         type="text"
@@ -229,7 +277,10 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                         placeholder="Descrição"
                         value={form.description}
                         onChange={(e) =>
-                            setForm((prev) => ({ ...prev, description: e.target.value }))
+                            setForm((prev) => ({
+                                ...prev,
+                                description: e.target.value,
+                            }))
                         }
                         disabled={submitting}
                     />
@@ -291,31 +342,33 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                     </div>
 
                     <h4>Membros e Instrumentos</h4>
-                    {form.members.map((member, idx) => (
-                        <div className="member-row" key={idx}>
+                    {form.members.map((member) => (
+                        <div className="member-row" key={member.id}>
                             <input
                                 type="text"
                                 name="name"
                                 placeholder="Nome"
                                 value={member.name}
-                                onChange={(e) => handleMemberChange(idx, e)}
+                                onChange={(e) => handleMemberChange(member.id, e)}
                                 disabled={submitting}
                                 required
                             />
+
                             <input
                                 type="text"
                                 name="instrument"
                                 placeholder="Instrumento"
                                 value={member.instrument}
-                                onChange={(e) => handleMemberChange(idx, e)}
+                                onChange={(e) => handleMemberChange(member.id, e)}
                                 disabled={submitting}
                                 required
                             />
+
                             {form.members.length > 1 && (
                                 <button
                                     type="button"
                                     className="remove-btn"
-                                    onClick={() => removeMember(idx)}
+                                    onClick={() => removeMember(member.id)}
                                     disabled={submitting}
                                 >
                                     Remover
@@ -344,6 +397,7 @@ export default function EditProfileModal({ band, onClose, onUpdated }) {
                         >
                             Cancelar
                         </button>
+
                         <button type="submit" className="save-btn" disabled={submitting}>
                             {submitting ? "Salvando..." : "Salvar"}
                         </button>

@@ -26,7 +26,7 @@
     text-align: center;
 }
 
-form {
+.form-card form {
     width: 100%;
     max-width: 600px;
     display: flex;
@@ -34,9 +34,9 @@ form {
     gap: 15px;
 }
 
-input,
-select,
-textarea {
+.form-card input,
+.form-card select,
+.form-card textarea {
     background-color: #1c1c1c;
     border: 1px solid #1c1c1c;
     padding: 12px;
@@ -48,15 +48,15 @@ textarea {
     border-radius: 5px;
 }
 
-textarea {
+.form-card textarea {
     resize: none;
     min-height: 120px;
     font-family: inherit;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
+.form-card input:focus,
+.form-card select:focus,
+.form-card textarea:focus {
     border: 1px solid #ff4d4d;
 }
 
@@ -124,6 +124,7 @@ textarea:focus {
 @media (max-width: 600px) {
     .form-card {
         padding: 25px;
+        margin: 24px 16px;
     }
 
     .form-card h1 {

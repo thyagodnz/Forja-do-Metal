@@ -1,13 +1,13 @@
 import "./Login.css"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import api from "../../services/api"
-import { useAuth } from "../../contexts/AuthContext"
+import api from "../../../services/api"
+import { useAuth } from "../../../contexts/AuthContext"
 
 export default function Login() {
 
     const navigate = useNavigate()
-    const { setUser } = useAuth()
+    const { setUser, setType } = useAuth()
 
     const [formData, setFormData] = useState({
         email: "",
@@ -36,9 +36,16 @@ export default function Login() {
 
             const response = await api.post("/auth/login", formData)
 
-            setUser(response.data.band)
+            const { user, type } = response.data
 
-            navigate(`/perfil/${response.data.band.id}`)
+            setUser(user)
+            setType(type)
+
+            if (type === "band") {
+                navigate(`/perfil-banda/${user.id}`)
+            } else {
+                navigate(`/perfil-usuario/${user.id}`)
+            }
 
         } catch (error) {
 

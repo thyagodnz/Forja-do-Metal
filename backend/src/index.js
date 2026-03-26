@@ -1,5 +1,5 @@
 import express from 'express'
-import routes from './routes.js'
+import routes from './routes/index.js'
 import connectDataBase from './config/database.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
@@ -14,7 +14,8 @@ app.use(cors({
 
 app.use(express.json())
 app.use(cookieParser())
-app.use(routes)
+
+app.use('/api', routes)
 
 connectDataBase()
     .then(() => {
