@@ -1,0 +1,21 @@
+import { Router } from "express"
+import { BandController } from "../controllers/index.js"
+import { auth } from "../middlewares/auth.js"
+import { upload } from "../middlewares/upload.js"
+
+const router = Router()
+
+router.post("/", BandController.createBand)
+router.get("/", BandController.getBands)
+router.get("/recent", BandController.getRecentBands)
+router.get("/:id", BandController.getBandById)
+router.delete("/:id", BandController.deleteBand)
+
+router.put(
+  "/:id",
+  auth,
+  upload.any(),
+  BandController.updateBand
+);
+
+export default router

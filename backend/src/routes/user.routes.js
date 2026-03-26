@@ -1,0 +1,23 @@
+import { Router } from "express"
+import { UserController } from "../controllers/index.js"
+import { auth } from "../middlewares/auth.js"
+import { upload } from "../middlewares/upload.js"
+
+const router = Router()
+
+router.get("/", UserController.getUsers)
+router.get("/:id", UserController.getUserById)
+router.post("/", UserController.createUser)
+
+router.patch("/favorites/:bandId", auth, UserController.toggleFavoriteBand);
+
+router.put(
+    "/:id",
+    auth,
+    upload.single("profilePicture"),
+    UserController.updateUser
+)
+
+router.delete("/:id", UserController.deleteUser)
+
+export default router

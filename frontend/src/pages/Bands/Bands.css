@@ -1,0 +1,119 @@
+.bands-page-container {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+}
+
+.bands-page-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 70px 24px;
+}
+
+.bands-page-title {
+    color: var(--ghost-white);
+    font-size: 40px;
+    margin-top: 0;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.bands-page-subtitle {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 28px;
+    color: #aaa;
+    font-weight: 400;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* SEARCH */
+
+.bands-search-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 36px;
+}
+
+.bands-search-box {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--onyx);
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 12px 16px;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bands-search-box:focus-within {
+    border-color: #e63946;
+    box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.12);
+}
+
+.bands-search-icon {
+    color: #888;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.bands-search-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--ghost-white);
+    font: inherit;
+    font-size: 15px;
+}
+
+.bands-search-input::placeholder {
+    color: #777;
+}
+
+/* GRID */
+
+.bands-page-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 220px));
+    justify-content: center;
+    gap: 14px;
+}
+
+.bands-page-empty {
+    color: #777;
+    text-align: center;
+    margin: 0;
+}
+
+@media (max-width: 720px) {
+    .bands-page-section {
+        padding: 40px 16px;
+    }
+
+    .bands-page-title {
+        font-size: 30px;
+    }
+
+    .bands-page-subtitle {
+        font-size: 16px;
+        margin-bottom: 22px;
+    }
+
+    .bands-search-wrapper {
+        margin-bottom: 28px;
+    }
+
+    .bands-search-box {
+        padding: 11px 14px;
+        border-radius: 8px;
+    }
+
+    .bands-page-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 8px;
+    }
+}

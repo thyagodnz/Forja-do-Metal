@@ -1,12 +1,12 @@
-import "./Register.css";
+import "./RegisterBand.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext.jsx";
-import api from "../../services/api.js";
+import { useAuth } from "../../../../contexts/AuthContext.jsx";
+import api from "../../../../services/api.js";
 
-export default function Register() {
+export default function RegisterBand() {
     const navigate = useNavigate();
-    const { setUser } = useAuth();
+    const { setUser, setType } = useAuth();
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -98,14 +98,15 @@ export default function Register() {
         const { confirmPassword, ...dataToSend } = formData;
 
         try {
-
             const response = await api.post("/bands", dataToSend);
 
-            setUser(response.data.band);
+            const { user, type } = response.data;
 
-            navigate(`/perfil/${response.data.band.id}`)
+            setUser(user);
+            setType(type);
+
+            navigate(`/perfil-banda/${user.id}`);
         } catch (error) {
-
             if (error.response) {
                 setError(error.response.data.message);
             } else {
@@ -113,7 +114,6 @@ export default function Register() {
             }
 
             console.error(error);
-
         } finally {
             setLoading(false);
         }
@@ -125,7 +125,6 @@ export default function Register() {
                 <h1>Cadastre sua Banda</h1>
 
                 <form onSubmit={handleSubmit}>
-
                     <input
                         type="text"
                         name="name"
@@ -203,7 +202,6 @@ export default function Register() {
 
                     {formData.members.map((member, index) => (
                         <div key={index} className="member-group">
-
                             <input
                                 type="text"
                                 name="name"
@@ -234,7 +232,6 @@ export default function Register() {
                                     Remover
                                 </button>
                             )}
-
                         </div>
                     ))}
 
@@ -271,20 +268,11 @@ export default function Register() {
                         required
                     />
 
-                    {error && (
-                        <p className="error-form">
-                            {error}
-                        </p>
-                    )}
+                    {error && <p className="error-form">{error}</p>}
 
-                    <button
-                        type="submit"
-                        className="cadastrar-button"
-                        disabled={loading}
-                    >
+                    <button type="submit" className="cadastrar-button" disabled={loading}>
                         {loading ? "Cadastrando..." : "Cadastrar"}
                     </button>
-
                 </form>
             </div>
         </div>
