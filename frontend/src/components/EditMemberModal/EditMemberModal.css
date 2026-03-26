@@ -79,10 +79,6 @@
 }
 
 @media (max-width: 720px) {
-    .member-edit-top {
-        align-items: flex-start;
-    }
-
     .member-edit-photo-preview {
         width: 90px;
         height: 90px;

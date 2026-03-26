@@ -40,7 +40,7 @@ export default function Bands() {
         <h1 className="bands-page-title">Bandas na Forja</h1>
 
         <h2 className="bands-page-subtitle">
-          Explore todas as bandas na nossa comunidade
+          Explore todas as bandas da nossa comunidade
         </h2>
 
         <div className="bands-search-wrapper">

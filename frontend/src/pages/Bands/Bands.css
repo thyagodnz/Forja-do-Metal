@@ -114,6 +114,6 @@
 
     .bands-page-grid {
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 10px;
+        gap: 8px;
     }
 }

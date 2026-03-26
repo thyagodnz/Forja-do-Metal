@@ -94,6 +94,11 @@ export default function BandProfile() {
   }
 
   function handleToggleMember(memberId) {
+    const selection = window.getSelection && window.getSelection();
+    const hasSelectedText = selection && selection.toString().trim().length > 0;
+
+    if (hasSelectedText) return;
+
     setExpandedMemberId((prev) => (prev === memberId ? null : memberId));
   }
 
@@ -321,15 +326,19 @@ export default function BandProfile() {
                     </div>
 
                     <span
-                      className={`member-expand-icon ${isExpanded ? "expanded" : ""
-                        }`}
+                      className={`member-expand-icon ${
+                        isExpanded ? "expanded" : ""
+                      }`}
                     >
                       <FiChevronDown />
                     </span>
                   </div>
 
                   {isExpanded && (
-                    <div className="member-extra-content">
+                    <div
+                      className="member-extra-content"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       {member.bio ? (
                         member.bio.split("\n").map((line, index) => (
                           <p className="member-bio" key={index}>

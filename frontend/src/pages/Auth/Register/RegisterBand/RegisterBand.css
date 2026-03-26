@@ -124,6 +124,7 @@
 @media (max-width: 600px) {
     .form-card {
         padding: 25px;
+        margin: 24px 16px;
     }
 
     .form-card h1 {

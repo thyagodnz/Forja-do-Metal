@@ -261,7 +261,7 @@
 @media (max-width: 720px) {
     .user-profile-label {
         left: 10px;
-        bottom: -5px;
+        bottom: -3px;
     }
 
     .user-profile-preview {
@@ -277,10 +277,6 @@
     .cover-preview.user-cover-preview {
         height: 100px;
     }
-
-    /* .cover-area {
-        
-    } */
 
     .modal-header {
         padding: 14px 16px;
